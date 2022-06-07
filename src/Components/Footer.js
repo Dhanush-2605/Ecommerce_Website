@@ -4,11 +4,13 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-import RoomIcon from '@mui/icons-material/Room';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
+import RoomIcon from "@mui/icons-material/Room";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import { mobile } from "../Responsive";
 const Container = styled.div`
   display: flex;
+  ${mobile({ flexDirection: "column" })}
 `;
 const Left = styled.div`
   flex: 1;
@@ -59,19 +61,17 @@ const ListItem = styled.li`
 const Right = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({ backgroundColor: "#fff8f8" })}
 `;
 
-const ContactItem=styled.div`
-margin-bottom: 20px;
-display: flex;
-align-items: center;
-
-
-
-`
-const Payment=styled.img`
-width:50%;
-`
+const ContactItem = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+`;
+const Payment = styled.img`
+  width: 50%;
+`;
 
 function Footer() {
   return (
@@ -114,10 +114,19 @@ function Footer() {
       </Center>
       <Right>
         <Title>Contact</Title>
-        <ContactItem><RoomIcon style={{marginRight:"10px"}}/>622 Dixie Path ,South Tobinchester 98336</ContactItem>
-        <ContactItem><PhoneIcon  style={{marginRight:"10px"}} />+1 234 56 78</ContactItem>
-        <ContactItem><EmailIcon  style={{marginRight:"10px"}}/>contact@mail.com</ContactItem>
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png"/>
+        <ContactItem>
+          <RoomIcon style={{ marginRight: "10px" }} />
+          622 Dixie Path ,South Tobinchester 98336
+        </ContactItem>
+        <ContactItem>
+          <PhoneIcon style={{ marginRight: "10px" }} />
+          +1 234 56 78
+        </ContactItem>
+        <ContactItem>
+          <EmailIcon style={{ marginRight: "10px" }} />
+          contact@mail.com
+        </ContactItem>
+        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
       </Right>
     </Container>
   );

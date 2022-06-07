@@ -3,12 +3,14 @@ import ArrowLeftOutlined from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlined from "@mui/icons-material/ArrowRightOutlined";
 import { sliderItems } from "../data";
 import { useState } from "react";
+import { mobile } from "../Responsive";
 const Container = styled.div`
   display: flex;
   height: 100vh;
   position: relative;
   width: 100%;
   overflow: hidden;
+  ${mobile({ display: "none" })}
 `;
 //Refer here
 const Arrow = styled.div`
