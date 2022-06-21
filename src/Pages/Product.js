@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../Components/Navbar";
 import Announcements from "../Components/Announcements";
@@ -6,6 +6,10 @@ import Newsletter from "../Components/Newsletter";
 import Footer from "../Components/Footer";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../Responsive";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { addProduct } from "../redux/cartRedux";
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
@@ -101,48 +105,80 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch=useDispatch();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/api/products/find/" + id
+        );
+        setProduct(res.data);
+        console.log(res.data);
+      } catch (err) {
+        console.log("ERROR");
+      }
+    };
+    getData();
+  }, [id]);
+  console.log(product);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 0 ? setQuantity(quantity - 1) : setQuantity(0);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleClick=()=>{
+    dispatch(addProduct({product,quantity,price:product.price*quantity}));
+
+  }
+
   return (
     <Container>
       <Navbar />
       <Announcements />
       <Wrapper>
         <ImageContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={product.img} />
         </ImageContainer>
         <InfoContainer>
-          <Title>Denim Jumpusuit</Title>
-          <Desc>
-            Lorem Ipsum is simply dummy word of the printing and typesetting
-            industry. Lorem Ipsum has been the industry standard dummy text ever
-            since the 1500s
-          </Desc>
-          <Price>$20</Price>
+          <Title>{product.title}</Title>
+          <Desc>{product.desc}</Desc>
+          <Price>${product.price}</Price>
           <FilterContainer>
             <Filter>
-              <FilterTitle>color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+              <FilterTitle>Color</FilterTitle>
+              {product.color?.map((c) => {
+                return (
+                  <FilterColor color={c} key={c} onClick={() => setColor(c)} />
+                );
+              })}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>X</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize onChange={(event) => setSize(event.target.value)}>
+                {product.size?.map((s) => {
+                  return <FilterSizeOption key={s}>{s}</FilterSizeOption>;
+                })}
               </FilterSize>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

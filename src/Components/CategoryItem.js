@@ -1,7 +1,8 @@
-import { style } from "@mui/system";
+
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../Responsive";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   flex: 1;
   margin: 3px;
@@ -18,9 +19,12 @@ const Image = styled.img`
 `;
 const Info = styled.div`
   position: absolute;
+  /* background-color: red; */
 
   height: 100%;
   width: 100%;
+  top:0;
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,14 +42,16 @@ const Button = styled.button`
   background-color: white;
   cursor: pointer;
 `;
-const CategoryItem = (props) => {
+const CategoryItem = ({item}) => {
   return (
     <Container>
-      <Image src={props.item.img} />
+    <Link to={`/products/${item.cat}`}>
+      <Image src={item.img} />
       <Info>
-        <Title>{props.item.title}</Title>
+        <Title>{item.title}</Title>
         <Button>SHOP NOW</Button>
       </Info>
+    </Link>
     </Container>
   );
 };

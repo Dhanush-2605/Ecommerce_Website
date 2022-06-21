@@ -14,7 +14,7 @@ const Container = styled.div`
     flexDirection: "column",
   })}/* flex-direction: column; */
 `;
-function Category() {
+const  Category=()=>{
   return (
     <Container>
       {categories.map((item) => (

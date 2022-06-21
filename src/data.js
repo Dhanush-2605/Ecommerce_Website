@@ -27,19 +27,19 @@ export const sliderItems = [
       id: 1,
       img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/6.jpeg?raw=true',
       title: 'SHIRT STYLE!',
-      category: 'women',
+      cat: 'women',
     },
     {
       id: 2,
       img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/4.jpeg?raw=true',
       title: 'LOUNGEWEAR LOVE',
-      category: 'coats',
+      cat: 'coats',
     },
     {
       id: 3,
       img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/5.jpeg?raw=true',
       title: 'LIGHT JACKETS',
-      category: 'jeans',
+      cat: 'jeans',
     },
   ];
 
@@ -51,7 +51,7 @@ export const sliderItems = [
     },
     {
       id: 2,
-      img: 'https://cdn.shopify.com/s/files/1/0101/4832/products/Angela_Natural_Tee.png?v=1606780388',
+      img: 'https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png',
     },
     {
       id: 3,

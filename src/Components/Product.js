@@ -4,7 +4,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-
+import { Link } from "react-router-dom";
 const Info = styled.div`
   opacity: 0;
   width: 100%;
@@ -69,13 +69,15 @@ function Product(props) {
   return (
     <Container>
       <Circle />
-      <Image src={props.item.img} />
+      <Image src={props.item.img} />   
       <Info>
         <Icon>
           <ShoppingCartIcon />
         </Icon>
         <Icon>
+        <Link to={`/product/${props.item._id}`}>
           <SearchIcon />
+        </Link>
         </Icon>
         <Icon>
           <FavoriteIcon />
