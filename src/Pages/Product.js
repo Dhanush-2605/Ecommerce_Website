@@ -7,7 +7,7 @@ import Footer from "../Components/Footer";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../Responsive";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import axios from "axios";
 import { addProduct } from "../redux/cartRedux";
 const Container = styled.div``;
@@ -111,7 +111,11 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
+  const select=useSelector(state=>state.cart);
+  // console.log(select);
+
+  
 
   useEffect(() => {
     const getData = async () => {
@@ -127,7 +131,7 @@ const Product = () => {
     };
     getData();
   }, [id]);
-  console.log(product);
+  const price=product.price;
 
   const handleQuantity = (type) => {
     if (type === "dec") {
@@ -136,11 +140,14 @@ const Product = () => {
       setQuantity(quantity + 1);
     }
   };
+// console.log(cart.pr)
+  const handleClick = () => {
+    // console.log(product);
+    console.log(quantity);
+    console.log(price);
+    dispatch(addProduct({ ...product,quantity:quantity, color:color, size:size }));
+  };
 
-  const handleClick=()=>{
-    dispatch(addProduct({product,quantity,price:product.price*quantity}));
-
-  }
 
   return (
     <Container>

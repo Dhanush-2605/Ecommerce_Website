@@ -22,7 +22,7 @@ function Products({ cat, filters, sort }) {
             : "http://localhost:5000/api/products"
         );
         setProducts(res.data);
-        console.log(res);
+        // console.log(res);
       } catch (err) {}
     };
     getProducts();

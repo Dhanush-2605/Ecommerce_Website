@@ -1,10 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { mobile } from "../Responsive";
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { userRequest } from "../requestMethod";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/userRedux";
+
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -14,7 +19,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({ padding: "10px 0px" })}
+  ${mobile({ padding: "10px 0px"})}
 `;
 //Styling left part
 const Left = styled.div`
@@ -64,8 +69,16 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 const Navbar = () => {
-  const quantity=useSelector(state=>state.cart.quantity);
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+  const quantity = useSelector((state) => state.cart.quantity);
   
+  const handleClick= ()=>{
+    dispatch(logoutUser());
+    navigate('/login');
+
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -80,14 +93,23 @@ const Navbar = () => {
           <Logo>Dhanush.</Logo>
         </Center>
         <Right>
+        <Link to="/register" style={{textDecoration:"none"}}>
           <MenuItem>Register</MenuItem>
+        </Link>
+          <Link to="/login" style={{textDecoration:"none"}}>
           <MenuItem>Login</MenuItem>
-          <MenuItem>
-            <Badge badgeContent={quantity} color="primary">
-              <ShoppingCartIcon />
-            </Badge>
-          </MenuItem>
+          </Link>
+
+          <Link to="/cart">
+            <MenuItem>
+              <Badge badgeContent={quantity} color="primary">
+                <ShoppingCartIcon />
+              </Badge>
+            </MenuItem>
+          </Link>
         </Right>
+        <MenuItem onClick={handleClick}>Logout</MenuItem>
+     
       </Wrapper>
     </Container>
   );
