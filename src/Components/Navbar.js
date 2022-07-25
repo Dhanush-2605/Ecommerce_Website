@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userRequest } from "../requestMethod";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/userRedux";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Container = styled.div`
   height: 60px;
@@ -109,6 +110,9 @@ const Navbar = () => {
           </Link>
         </Right>
         <MenuItem onClick={handleClick}>Logout</MenuItem>
+        <Link to="/profile">
+        <AccountCircleIcon  />
+        </Link>
      
       </Wrapper>
     </Container>

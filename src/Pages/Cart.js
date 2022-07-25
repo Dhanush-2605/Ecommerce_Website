@@ -14,6 +14,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import OrderedComponents from "../Components/orderedComponents";
 // import { useHistory } from "react-router-dom";
 import { emptyCart } from "../redux/cartRedux";
 
@@ -215,7 +216,7 @@ const Cart = () => {
 
   const initPayment = (data) => {
     const options = {
-      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+      key: "refer here",
       amount: 1000,
       currency: "USD",
       order_id: data.id,
@@ -370,6 +371,7 @@ const Cart = () => {
         </Bottom>
       </Wrapper>
       <Footer />
+      <OrderedComponents />
     </Container>
   );
 };
