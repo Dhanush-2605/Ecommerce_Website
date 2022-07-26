@@ -1,5 +1,5 @@
 import { style } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 
 import { mobile } from "../Responsive";
@@ -81,11 +81,40 @@ const Update = styled.div`
   margin-top: 20px;
   padding: 20px;
 `;
+const File = styled.input`
+  /* padding: 10px; */
+  /* margin:50x; */
+  display: none;
+  /* background-color: teal; */
+`;
 const Profile = () => {
   const [userData, setUserData] = useState({});
-  const [password,setNewPassword]=useState("");
+  const [password, setNewPassword] = useState("");
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState("");
+  const fileInputRef = useRef();
   const User = useSelector((state) => state.user.currentUser);
   console.log(User);
+  useEffect(()=>{
+    if (image){
+      const reader= new FileReader();
+      reader.onloadend=()=>{
+        setPreview(reader.result);
+        // console.log(preview);
+
+      }
+
+      reader.readAsDataURL(image);
+
+    }else{
+      setPreview(null)
+
+
+    }
+
+  },[image])
+
+
   /* useEffect(()=>{
         const getData=async()=>{
             try{
@@ -101,17 +130,37 @@ const Profile = () => {
         }
         getData();
 
-    }) */
+   
+      }) */
+      console.log(preview);
   return (
     <Container>
       <Wrapper>
         <Left>
+          {preview?<img src={preview} />:<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" /> }
+}
           <Title>My Profile</Title>
           <TopDiv>
-            <Img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
+            {/* <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" /> */}
           </TopDiv>
           <TopDiv>
-            <Button>Update Profile</Button>
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                fileInputRef.current.click();
+              }}
+            >
+              Update Profile
+            </button>
+            <File type="file" accept="image/*" ref={fileInputRef} onChange={(event)=>{
+              const file=event.target.files[0];
+              if (file){
+                setImage(file);
+
+              }else{
+                setImage(null);
+              }
+            }}></File>
           </TopDiv>
         </Left>
         <Right>
