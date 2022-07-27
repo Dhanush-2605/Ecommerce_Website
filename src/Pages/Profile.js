@@ -4,7 +4,15 @@ import styled from "styled-components";
 
 import { mobile } from "../Responsive";
 import { userRequest } from "../requestMethod";
+import app from "../firebase.js";
 import { useSelector } from "react-redux";
+
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 const TopDiv = styled.div`
   margin: 60px 0px;
   /* margin: auto; */
@@ -70,6 +78,7 @@ const Button = styled.button`
   cursor: pointer;
   background-color: teal;
   color: white;
+  width: 100%;
 `;
 const Input = styled.input`
   padding: 10px;
@@ -82,39 +91,119 @@ const Update = styled.div`
   padding: 20px;
 `;
 const File = styled.input`
-  /* padding: 10px; */
-  /* margin:50x; */
+  /* padding: 10px;
+  margin:50x; */
   display: none;
-  /* background-color: teal; */
+  background-color: teal;
 `;
+const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100px;
+  width: 200px;
+`;
+const UploadButton=styled.button`
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  background-color:dodgerblue;
+  color: white;
+`
 const Profile = () => {
   const [userData, setUserData] = useState({});
   const [password, setNewPassword] = useState("");
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState("");
-  const fileInputRef = useRef();
+  const [image, setImage] = useState({});
+  const [profile,setProfile]=useState("");
+  const [file, setFile] = useState();
+  const fileButton=useRef();
+
   const User = useSelector((state) => state.user.currentUser);
+
   console.log(User);
-  useEffect(()=>{
-    if (image){
-      const reader= new FileReader();
-      reader.onloadend=()=>{
-        setPreview(reader.result);
-        // console.log(preview);
 
+  const profileHandler = (e) => {
+    // try{
+    //   if (preview){
+    //     imageProfile.img=preview;
+    // const res=await userRequest.put(`users/profile/${User._id}}`,preview);
+
+    // console.log(res);
+    //   }
+    // }catch(err){
+    //   console.log(err);
+    // }
+
+    e.preventDefault();
+    const fileName = new Date().getTime() + file.name;
+    const storage = getStorage(app);
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+        }
+      },
+      (error) => {},
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          // const product = { ...inputs, img: downloadURL, categories: cat };
+          // console.log(product);
+          setImage(() => {
+            return {
+              img: downloadURL,
+            };
+          });
+
+          // const res = await userRequest.put(`users/profile/${User._id}}`,img)
+
+          // console.log(downloadURL);
+          // addProduct(product, dispatch);
+        });
       }
+    );
+  };
+  console.log(image);
+  useEffect(() => {
+    const updatedProfile = async () => {
+      try {
+        if (image) {
+          const res = await userRequest.put(`users/${User._id}`, image);
 
-      reader.readAsDataURL(image);
+          console.log(res);
+          setProfile(res.data.img)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    updatedProfile();
+  });
 
-    }else{
-      setPreview(null)
+  const passwordHandler=async()=>{
+    try{
+      // const res=await userRequest.put(`users/${User._id}`,data);
 
+
+    }catch(err){
+      console.log(err);
 
     }
-
-  },[image])
-
-
+  }
   /* useEffect(()=>{
         const getData=async()=>{
             try{
@@ -132,35 +221,34 @@ const Profile = () => {
 
    
       }) */
-      console.log(preview);
+
+  // const updateProfile=async()=>{
+
+  // }
+
+  // console.log(preview);
   return (
     <Container>
       <Wrapper>
         <Left>
-          {preview?<img src={preview} />:<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" /> }
-}
           <Title>My Profile</Title>
           <TopDiv>
-            {/* <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" /> */}
+            <Img src={profile} alt="image" />
           </TopDiv>
           <TopDiv>
-            <button
-              onClick={(event) => {
-                event.preventDefault();
-                fileInputRef.current.click();
-              }}
-            >
-              Update Profile
-            </button>
-            <File type="file" accept="image/*" ref={fileInputRef} onChange={(event)=>{
-              const file=event.target.files[0];
-              if (file){
-                setImage(file);
+            <ButtonDiv>
+              <UploadButton onClick={(event)=>{event.preventDefault();fileButton.current.click()}}>choose image</UploadButton>
 
-              }else{
-                setImage(null);
-              }
-            }}></File>
+              <File
+                type="file"
+                name="img"
+                id="img"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files[0])}
+                ref={fileButton}
+              />
+              <Button onClick={profileHandler}>Update Profile</Button>
+            </ButtonDiv>
           </TopDiv>
         </Left>
         <Right>

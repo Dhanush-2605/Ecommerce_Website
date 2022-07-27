@@ -4,6 +4,7 @@ import { userRequest } from "../requestMethod";
 import { useSelector } from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RunningWithErrorsIcon from "@mui/icons-material/RunningWithErrors";
+import OrderedComponents from "../Components/orderedComponents";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -196,12 +197,8 @@ const Success = () => {
           {orderedItems.length!==0?
           <>{orderedItems.products.map((item)=>{
             return (
-              <div>
-              <img src={item.productImg} alt="img" />
-              <h1>{item.productName}</h1>
-              <h1>{item.quantity}</h1>
+              <OrderedComponents img={item.productImg} quantity={item.quantity} productName={item.productName} price={item.price}/>
 
-              </div>
             )
           })}
           </>
