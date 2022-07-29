@@ -216,7 +216,7 @@ const Cart = () => {
 
   const initPayment = (data) => {
     const options = {
-      key: "refer here",
+      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: 1000,
       currency: "USD",
       order_id: data.id,

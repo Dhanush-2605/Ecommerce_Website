@@ -69,25 +69,14 @@ const Bottom = styled.div`
 
   flex-direction: column;
 `;
-const ShippingInfo = styled.div`
-  /* width: 50vw; */
-  width: 100%;
-`;
+
 const PaymentInfo = styled.div``;
 
 const OrderInfo = styled.div``;
-const Product = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const SpanText=styled.span`
-font-weight: 400;
-margin-left: 20px;
 
-`
 const Success = () => {
   const location = useLocation();
+  
   const [orderedItems, setOrderItems] = useState([]);
   const currentUser = useSelector((state) => state.user.currentUser);
   console.log(currentUser);
@@ -105,11 +94,13 @@ const Success = () => {
       try {
         const res = await userRequest.post("/orders", {
           userId: currentUser._id,
+          name:currentUser.username,
           products: cart.products.map((item) => ({
             productId: item.id,
             productName:item.title,
             quantity: item.quantity,
             productImg: item.img,
+            price:item.price
           })),
           address: address,
           amount: cart.total,
@@ -156,7 +147,7 @@ const Success = () => {
             </div>
           </Div>
         )}
-        <Link to="/">
+        <Link to={`/orderdetails/${currentUser._id}`} >
           <button
             style={{
               padding: 10,
@@ -166,45 +157,19 @@ const Success = () => {
               cursor: "pointer",
             }}
           >
-            Go to Homepage
+            Order Details
           </button>
         </Link>
       </Left>
       <Right>
         <Top>
-          <ShippingInfo>
-            <Title>
-              <h1>Shipping Details</h1>
-            </Title>
-            <Div>
-              <h3>Name  <SpanText>Dhanush</SpanText></h3>
-            
-            </Div>
-            <Div>
-            <h3>Name  <SpanText>Dhanush</SpanText></h3>
-            </Div>
-            <Div>
-            <h3>Name  <SpanText>Dhanush</SpanText></h3>
-            </Div>
-  
-          </ShippingInfo>
+
         </Top>
         <Bottom>
           <Title>
             <h1>Ordered Items</h1>
           </Title>
-          <Product>
-          {orderedItems.length!==0?
-          <>{orderedItems.products.map((item)=>{
-            return (
-              <OrderedComponents img={item.productImg} quantity={item.quantity} productName={item.productName} price={item.price}/>
 
-            )
-          })}
-          </>
-          :<h1>loading</h1>}
-
-          </Product>
         </Bottom>
       </Right>
     </Container>
