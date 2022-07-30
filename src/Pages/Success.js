@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { userRequest } from "../requestMethod";
 import { useSelector } from "react-redux";
@@ -76,7 +76,7 @@ const OrderInfo = styled.div``;
 
 const Success = () => {
   const location = useLocation();
-  
+
   const [orderedItems, setOrderItems] = useState([]);
   const currentUser = useSelector((state) => state.user.currentUser);
   console.log(currentUser);
@@ -94,18 +94,17 @@ const Success = () => {
       try {
         const res = await userRequest.post("/orders", {
           userId: currentUser._id,
-          name:currentUser.username,
+          name: currentUser.username,
           products: cart.products.map((item) => ({
             productId: item.id,
-            productName:item.title,
+            productName: item.title,
             quantity: item.quantity,
             productImg: item.img,
-            price:item.price
+            price: item.price,
           })),
           address: address,
           amount: cart.total,
           number: number,
-          status: "order confirmed",
         });
         console.log(res);
         setOrderItems(res.data);
@@ -147,7 +146,7 @@ const Success = () => {
             </div>
           </Div>
         )}
-        <Link to={`/orderdetails/${currentUser._id}`} >
+        <Link to={`/orderdetails/${currentUser._id}`}>
           <button
             style={{
               padding: 10,
@@ -162,14 +161,11 @@ const Success = () => {
         </Link>
       </Left>
       <Right>
-        <Top>
-
-        </Top>
+        <Top></Top>
         <Bottom>
           <Title>
             <h1>Ordered Items</h1>
           </Title>
-
         </Bottom>
       </Right>
     </Container>

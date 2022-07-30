@@ -367,11 +367,19 @@ const Cart = () => {
                 </AddressButton>
               </Address>
             )}
+
+            <Button style={{ marginTop: "200px" }}>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to={`/orderdetails/${currentUser._id}`}
+              >
+                ORDER DETAILS
+              </Link>
+            </Button>
           </Summary>
         </Bottom>
       </Wrapper>
       <Footer />
-      <OrderedComponents />
     </Container>
   );
 };

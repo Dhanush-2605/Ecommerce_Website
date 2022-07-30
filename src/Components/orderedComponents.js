@@ -12,6 +12,7 @@ const Component = styled.div`
   column-gap: 50px;
   row-gap: 30px;
   justify-content: space-around;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 `;
 const Wrapper = styled.div`
   display: flex;
