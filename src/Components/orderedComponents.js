@@ -36,6 +36,9 @@ const DetailDiv = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const H3=styled.h3`
+font-weight: 400;
+`
 const OrderedComponents = (props) => {
   const { img, quantity, productName, price } = props;
   return (
@@ -45,8 +48,8 @@ const OrderedComponents = (props) => {
           <Img src={img} />
         </Div>
         <DetailDiv>
-          <h1>{productName}</h1>
-          <h1>{quantity}</h1>
+          <H3>{productName}</H3>
+          <H3>{quantity}</H3>
         </DetailDiv>
         <Div>
           <p>$ {price}</p>

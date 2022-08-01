@@ -13,15 +13,18 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { Link } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import dualring from "../Assests/dualring.svg";
+import { red } from "@mui/material/colors";
 const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100vh;
   flex-direction: column;
+  overflow: auto;
 `;
 const Product = styled.div`
   display: flex;
+  padding: 20px;
   align-items: center;
   justify-content: center;
 
@@ -39,14 +42,21 @@ const Div = styled.div`
 `;
 const ShippingInfo = styled.div`
   /* width: 50vw; */
+  /* margin-top: 400px; */
+  overflow: auto;
   width: 70%;
+  padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+
+
 `;
 const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 40px;
+
 `;
 
 const SpanText = styled.span`
@@ -60,7 +70,8 @@ const OrderStatus = styled.div`
   justify-content: space-around;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-  width: 70%;
+  padding: 20px;
+  width: 40%;
 `;
 const Button = styled.button`
   border: none;
@@ -105,6 +116,27 @@ const NoOrderDiv = styled.div`
   flex-direction: column;
   height: 100vh;
 `;
+const H1=styled.h1`
+font-weight: 500;
+`;
+const StatusButton=styled.div`
+    padding: 5px 7px;
+    border: none;
+    border-radius: 10px;
+`
+const Delivered=styled.button`
+      background-color: #e5faf2;
+      color: #3bb077;
+`
+
+
+const Shipping=styled.button`
+  background-color: #ffebbf;
+  color: #de932a;
+`
+const Pending=styled.button``
+  
+
 const OrderDetails = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const location = useLocation();
@@ -113,7 +145,7 @@ const OrderDetails = () => {
 
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
-
+  console.log(order);
   const handleOrderStatus = async () => {
     try {
       const res = await userRequest.put(`orders/${currentUser._id}`, {
@@ -126,20 +158,22 @@ const OrderDetails = () => {
     }
   };
   useEffect(() => {
-    const createOrder = async () => {
+    console.log("usse");
+    const getOrder = async () => {
       try {
         const res = await userRequest.get(`/orders/find/${id}`);
 
         console.log(res.data);
         dispatch(addOrder(res.data));
-        setOrderItems(res.data[0]);
+        setOrderItems(res.data);
       } catch (err) {
         console.log(err);
       }
-    };
-    createOrder();
+    }; 
+    getOrder();
   }, [currentUser, id, dispatch]);
-  console.log(orderedItems);
+
+  console.log(order);
   const cancelHandler = async () => {
     try {
       const res = await userRequest.put(`/orders/find/${id}`);
@@ -151,6 +185,10 @@ const OrderDetails = () => {
       console.log(err);
     }
   };
+
+  const Status = ({ type }) => {
+    return <StatusButton className={"widgetLgButton " + type}>{type}</StatusButton>;
+  };
   return (
     <>
       {order.orders[0].length !== 0 ? (
@@ -159,7 +197,7 @@ const OrderDetails = () => {
             {order.orders[0].length !== 0 ? (
               <ShippingInfo>
                 <Title>
-                  <h1>Shipping Details</h1>
+                  <H1>Shipping Details</H1>
                 </Title>
 
                 <TextDiv>
@@ -167,7 +205,7 @@ const OrderDetails = () => {
                     <h3>Name</h3>
                   </Div>
                   <Div>
-                    <SpanText>{orderedItems.name}</SpanText>
+                    <SpanText>{order.orders[0].name}</SpanText>
                   </Div>
                 </TextDiv>
                 <TextDiv>
@@ -175,7 +213,7 @@ const OrderDetails = () => {
                     <h3>Address</h3>
                   </Div>
                   <Div>
-                    <SpanText>{orderedItems.number}</SpanText>
+                    <SpanText>{order.orders[0].number}</SpanText>
                   </Div>
                 </TextDiv>
                 <TextDiv>
@@ -183,7 +221,7 @@ const OrderDetails = () => {
                     <h3>Number</h3>
                   </Div>
                   <Div>
-                    <SpanText>{orderedItems.address}</SpanText>
+                    <SpanText>{order.orders[0].address}</SpanText>
                   </Div>
                 </TextDiv>
               </ShippingInfo>
@@ -191,11 +229,12 @@ const OrderDetails = () => {
               <img src={dualring} alt="img" />
             )}
             <OrderStatus>
-              <Title>Order Status</Title>
-              <h4>{order.orders[0].status}</h4>
+              <Title><H1>Order Status</H1></Title>
+              <Status type={order.orders[0].status}>{order.orders[0].status}</Status>
+              {/* <h4>{order.orders[0].status}</h4> */}
             </OrderStatus>
             <Product>
-              <Title>Ordered Items</Title>
+              <Title><H1>Ordered Items</H1></Title>
               {order.orders.length !== 0 ? (
                 <>
                   {order.orders[0].products.map((item) => {
@@ -216,10 +255,7 @@ const OrderDetails = () => {
                 <img src={dualring} alt="img" />
               )}
             </Product>
-            <Button onClick={handleOrderStatus}>
-              <ClearIcon style={{ marginTop: "-4px", marginRight: "5px" }} />
-              <span>Cancel Order</span>
-            </Button>
+
 
             {/* </div> */}
           </Container>
