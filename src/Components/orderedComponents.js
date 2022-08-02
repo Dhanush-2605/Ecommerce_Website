@@ -25,7 +25,7 @@ const Img = styled.img`
   height: 80px;
   width: 80px;
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain;
 `;
 const Div = styled.div`
   display: flex;

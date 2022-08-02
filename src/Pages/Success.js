@@ -80,7 +80,7 @@ const Success = () => {
   const [orderedItems, setOrderItems] = useState([]);
   const currentUser = useSelector((state) => state.user.currentUser);
   console.log(currentUser);
-  // setOrderId(location.state.orderId);
+  
   const orderId = location.state.orderId;
   console.log(orderId);
 
@@ -115,8 +115,7 @@ const Success = () => {
     data && createOrder();
   }, [cart, data, currentUser, address, number]);
 
-  // const success=
-  // const processing=
+
 
   return (
     <Container>
@@ -174,22 +173,4 @@ const Success = () => {
 
 export default Success;
 
-{
-  /* <PaymentInfo>
-    <Title>Payment</Title>
-    <ul>
-      <li>Paid</li>
-      <li>Amount   : 95678</li>
-    
-    </ul>
-    
 
-    </PaymentInfo>
-    <OrderInfo>
-    <Title>Order Status</Title>
-    <p>shipped</p>
-
-    
-
-    </OrderInfo> */
-}

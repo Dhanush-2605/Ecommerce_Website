@@ -43,7 +43,7 @@ const Div = styled.div`
 const ShippingInfo = styled.div`
   /* width: 50vw; */
   /* margin-top: 400px; */
-  overflow: auto;
+  /* overflow: auto; */
   width: 70%;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
@@ -142,23 +142,15 @@ const OrderDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [orderedItems, setOrderItems] = useState([]);
+  // const [orderStatus,setOrderStatus]=useState({});
+  // const status={status: "Order Cancelled By User"}
 
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
-  console.log(order);
-  const handleOrderStatus = async () => {
-    try {
-      const res = await userRequest.put(`orders/${currentUser._id}`, {
-        status: "order cancelled by user",
-      });
-      dispatch(cancelOrder());
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const orderStatus={status:"Canceled"};
+
   useEffect(() => {
-    console.log("usse");
+    
     const getOrder = async () => {
       try {
         const res = await userRequest.get(`/orders/find/${id}`);
@@ -174,12 +166,24 @@ const OrderDetails = () => {
   }, [currentUser, id, dispatch]);
 
   console.log(order);
+
+  const handleOrderStatus = async () => {
+    try {
+
+      const res = await userRequest.put(`orders/${id}`,orderStatus);
+      // dispatch(cancelOrder());
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const cancelHandler = async () => {
     try {
       const res = await userRequest.put(`/orders/find/${id}`);
 
       console.log(res);
-      dispatch(cancelOrder());
+      // dispatch(cancelOrder());
       setOrderItems(res.data);
     } catch (err) {
       console.log(err);
@@ -190,10 +194,14 @@ const OrderDetails = () => {
     return <StatusButton className={"widgetLgButton " + type}>{type}</StatusButton>;
   };
   return (
-    <>
+    // <div>
+    //   <h1>ola</h1>
+    // </div>
+    <Container>
       {order.orders[0].length !== 0 ? (
         <>
-          <Container>
+        
+          
             {order.orders[0].length !== 0 ? (
               <ShippingInfo>
                 <Title>
@@ -257,8 +265,8 @@ const OrderDetails = () => {
             </Product>
 
 
-            {/* </div> */}
-          </Container>
+            
+
         </>
       ) : (
         <NoOrderDiv>
@@ -271,7 +279,10 @@ const OrderDetails = () => {
           </HomeButton>
         </NoOrderDiv>
       )}
-    </>
+      <Div>
+        <Button onClick={handleOrderStatus}>Cancel Order</Button>
+      </Div>
+    </Container> 
   );
 };
 
