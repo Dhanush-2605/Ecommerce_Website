@@ -47,16 +47,12 @@ const ShippingInfo = styled.div`
   width: 70%;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-
-
-
 `;
 const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 40px;
-
 `;
 
 const SpanText = styled.span`
@@ -116,26 +112,24 @@ const NoOrderDiv = styled.div`
   flex-direction: column;
   height: 100vh;
 `;
-const H1=styled.h1`
-font-weight: 500;
+const H1 = styled.h1`
+  font-weight: 500;
 `;
-const StatusButton=styled.div`
-    padding: 5px 7px;
-    border: none;
-    border-radius: 10px;
-`
-const Delivered=styled.button`
-      background-color: #e5faf2;
-      color: #3bb077;
-`
+const StatusButton = styled.div`
+  padding: 5px 7px;
+  border: none;
+  border-radius: 10px;
+`;
+const Delivered = styled.button`
+  background-color: #e5faf2;
+  color: #3bb077;
+`;
 
-
-const Shipping=styled.button`
+const Shipping = styled.button`
   background-color: #ffebbf;
   color: #de932a;
-`
-const Pending=styled.button``
-  
+`;
+const Pending = styled.button``;
 
 const OrderDetails = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -147,31 +141,29 @@ const OrderDetails = () => {
 
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
-  const orderStatus={status:"Canceled"};
-
+  const orderStatus = { status: "Canceled" };
+  console.log(order.orders);
   useEffect(() => {
-    
     const getOrder = async () => {
       try {
-        const res = await userRequest.get(`/orders/find/${id}`);
+        const res = await userRequest.get(`/orders/find/${order._id}`);
 
-        console.log(res.data);
+        console.log(res);
         dispatch(addOrder(res.data));
         setOrderItems(res.data);
       } catch (err) {
         console.log(err);
       }
-    }; 
+    };
     getOrder();
-  }, [currentUser, id, dispatch]);
+  }, [currentUser, dispatch, order._id]);
 
   console.log(order);
 
   const handleOrderStatus = async () => {
     try {
-
-      const res = await userRequest.put(`orders/${id}`,orderStatus);
-      // dispatch(cancelOrder());
+      const res = await userRequest.put(`orders/${id}`, orderStatus);
+      dispatch(cancelOrder());
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -191,98 +183,97 @@ const OrderDetails = () => {
   };
 
   const Status = ({ type }) => {
-    return <StatusButton className={"widgetLgButton " + type}>{type}</StatusButton>;
+    return (
+      <StatusButton className={"widgetLgButton " + type}>{type}</StatusButton>
+    );
   };
   return (
-    // <div>
-    //   <h1>ola</h1>
-    // </div>
-    <Container>
-      {order.orders[0].length !== 0 ? (
-        <>
-        
-          
-            {order.orders[0].length !== 0 ? (
-              <ShippingInfo>
-                <Title>
-                  <H1>Shipping Details</H1>
-                </Title>
+    <div>
+      <h1>ola</h1>
+    </div>
+    // <Container>
+    //   {order.orders != null ? ( 
+    //     <>
+    //       {order.orders !== null ? (
+    //         <ShippingInfo>
+    //           <Title>
+    //             <H1>Shipping Details</H1>
+    //           </Title>
 
-                <TextDiv>
-                  <Div>
-                    <h3>Name</h3>
-                  </Div>
-                  <Div>
-                    <SpanText>{order.orders[0].name}</SpanText>
-                  </Div>
-                </TextDiv>
-                <TextDiv>
-                  <Div>
-                    <h3>Address</h3>
-                  </Div>
-                  <Div>
-                    <SpanText>{order.orders[0].number}</SpanText>
-                  </Div>
-                </TextDiv>
-                <TextDiv>
-                  <Div>
-                    <h3>Number</h3>
-                  </Div>
-                  <Div>
-                    <SpanText>{order.orders[0].address}</SpanText>
-                  </Div>
-                </TextDiv>
-              </ShippingInfo>
-            ) : (
-              <img src={dualring} alt="img" />
-            )}
-            <OrderStatus>
-              <Title><H1>Order Status</H1></Title>
-              <Status type={order.orders[0].status}>{order.orders[0].status}</Status>
-              {/* <h4>{order.orders[0].status}</h4> */}
-            </OrderStatus>
-            <Product>
-              <Title><H1>Ordered Items</H1></Title>
-              {order.orders.length !== 0 ? (
-                <>
-                  {order.orders[0].products.map((item) => {
-                    return (
-                      <ItemsDiv>
-                        <OrderedComponents
-                          key={item._id}
-                          img={item.productImg}
-                          quantity={item.quantity}
-                          productName={item.productName}
-                          price={item.price * item.quantity}
-                        />
-                      </ItemsDiv>
-                    );
-                  })}
-                </>
-              ) : (
-                <img src={dualring} alt="img" />
-              )}
-            </Product>
-
-
-            
-
-        </>
-      ) : (
-        <NoOrderDiv>
-          <Title>No Orders</Title>
-          <RemoveShoppingCartIcon style={{ fontSize: "100px", color: "red" }} />
-          <HomeButton>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/">
-              Back To Home Page
-            </Link>
-          </HomeButton>
-        </NoOrderDiv>
-      )}
-      <Div>
-        <Button onClick={handleOrderStatus}>Cancel Order</Button>
-      </Div>
-    </Container> 
+    //           <TextDiv>
+    //             <Div>
+    //               <h3>Name</h3>
+    //             </Div>
+    //             <Div>
+    //               <SpanText>{order.orders.name}</SpanText>
+    //             </Div>
+    //           </TextDiv>
+    //           <TextDiv>
+    //             <Div>
+    //               <h3>Address</h3>
+    //             </Div>
+    //             <Div>
+    //               <SpanText>{order.orders.number}</SpanText>
+    //             </Div>
+    //           </TextDiv>
+    //           <TextDiv>
+    //             <Div>
+    //               <h3>Number</h3>
+    //             </Div>
+    //             <Div>
+    //               <SpanText>{order.orders.address}</SpanText>
+    //             </Div>
+    //           </TextDiv>
+    //         </ShippingInfo>
+    //       ) : (
+    //         <img src={dualring} alt="img" />
+    //       )}
+    //       <OrderStatus>
+    //         <Title>
+    //           <H1>Order Status</H1>
+    //         </Title>
+    //         <Status type={order.orders.status}>{order.orders.status}</Status>
+    //         {/* <h4>{order.orders[0].status}</h4> */}
+    //       </OrderStatus>
+    //       <Product>
+    //         <Title>
+    //           <H1>Ordered Items</H1>
+    //         </Title>
+    //         {order.orders !== null ? (
+    //           <>
+    //             {order.orders.products.map((item) => {
+    //               return (
+    //                 <ItemsDiv key={item._id}>
+    //                   <OrderedComponents
+    //                     img={item.productImg}
+    //                     quantity={item.quantity}
+    //                     productName={item.productName}
+    //                     price={item.price * item.quantity}
+    //                   />
+    //                 </ItemsDiv>
+    //               );
+    //             })}
+    //           </>
+    //         ) : (
+    //           <img src={dualring} alt="img" />
+    //         )}
+    //       </Product>
+    //     </>
+    //   ) : (
+    //     <NoOrderDiv>
+    //       <Title>No Orders</Title>
+    //       <RemoveShoppingCartIcon style={{ fontSize: "100px", color: "red" }} />
+    //       <HomeButton>
+    //         <Link style={{ textDecoration: "none", color: "white" }} to="/">
+    //           Back To Home Page
+    //         </Link>
+    //       </HomeButton>
+    //     </NoOrderDiv>
+    //   )}
+    //   <Div>
+    //     <Button onClick={handleOrderStatus}>Cancel Order</Button>
+    //   </Div>
+    // </Container>
   );
 };
 

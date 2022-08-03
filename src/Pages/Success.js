@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RunningWithErrorsIcon from "@mui/icons-material/RunningWithErrors";
 import OrderedComponents from "../Components/orderedComponents";
+import { useDispatch } from "react-redux";
+import { addOrder } from "../redux/orderRedux";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -79,7 +81,7 @@ const Success = () => {
 
   const [orderedItems, setOrderItems] = useState([]);
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
+  
   
   const orderId = location.state.orderId;
   console.log(orderId);
@@ -89,6 +91,7 @@ const Success = () => {
   console.log(cart);
   const address = location.state.address;
   const number = location.state.number;
+  const dispatch=useDispatch();
   useEffect(() => {
     const createOrder = async () => {
       try {
@@ -106,8 +109,9 @@ const Success = () => {
           amount: cart.total,
           number: number,
         });
-        console.log(res);
+        // console.log(res);
         setOrderItems(res.data);
+        dispatch(addOrder(res.data));
       } catch (err) {
         console.log(err);
       }
@@ -115,7 +119,7 @@ const Success = () => {
     data && createOrder();
   }, [cart, data, currentUser, address, number]);
 
-
+console.log(orderedItems);
 
   return (
     <Container>
@@ -145,7 +149,7 @@ const Success = () => {
             </div>
           </Div>
         )}
-        <Link to={`/orderdetails/${currentUser._id}`}>
+        <Link to={`/orderdetails/${orderedItems._id}`}>
           <button
             style={{
               padding: 10,
