@@ -103,21 +103,16 @@ const Navbar = () => {
           <Logo>Dhanush.</Logo>
         </Center>
         <Right>
-        {!user.currentUser.accessToken && <> 
           <Link to="/register" style={{ textDecoration: "none" }}>
             <MenuItem>Register</MenuItem>
           </Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <MenuItem>Login</MenuItem>
           </Link>
-          </>
-        }
-
-       
 
           <MenuItem onClick={handleClick}>Logout</MenuItem>
           <Link to="/cart">
-          <MenuItem>
+            <MenuItem>
               <Badge badgeContent={quantity} color="primary">
                 <ShoppingCartIcon />
               </Badge>

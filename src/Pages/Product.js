@@ -20,9 +20,9 @@ const ImageContainer = styled.div`
   flex: 1;
 `;
 const Image = styled.img`
-  width: 100%;
+  /* width: 100%; */
   height: 90vh;
-  object-fit: cover;
+  object-fit: fit;
   ${mobile({ height: "45vh" })}
 `;
 

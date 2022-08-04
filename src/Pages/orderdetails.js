@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import dualring from "../Assests/dualring.svg";
 import { red } from "@mui/material/colors";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -41,9 +42,6 @@ const Div = styled.div`
   margin: 20px 0px;
 `;
 const ShippingInfo = styled.div`
-  /* width: 50vw; */
-  /* margin-top: 400px; */
-  /* overflow: auto; */
   width: 70%;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
@@ -80,6 +78,18 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
+const DeliveredButton = styled.button`
+  border: none;
+  padding: 10px;
+  background-color: lightgreen;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-top: 30px;
+`;
 const HomeButton = styled.button`
   border: none;
   padding: 10px;
@@ -115,38 +125,37 @@ const NoOrderDiv = styled.div`
 const H1 = styled.h1`
   font-weight: 500;
 `;
-const StatusButton = styled.div`
-  padding: 5px 7px;
+const StatusButton = styled.button`
+  padding: 10px 30px;
+  font-size: 24px;
   border: none;
+  background-color: ${(props) => props.type === "Shipping" && "#ffebbf"};
+  background-color: ${(props) => props.type === "Delivered" && "#e5faf2"};
+  background-color: ${(props) => props.type === "Pending" && "#ebf1fe"};
+  color: ${(props) => props.type === "Delivered" && "#3bb077"};
+  color: ${(props) => props.type === "Shipping" && "#de932a"};
+  color: ${(props) => props.type === "Pending" && "#2a7ade"};
   border-radius: 10px;
 `;
-const Delivered = styled.button`
-  background-color: #e5faf2;
-  color: #3bb077;
+const Span = styled.span`
+  margin: 3px 5px;
 `;
-
-const Shipping = styled.button`
-  background-color: #ffebbf;
-  color: #de932a;
-`;
-const Pending = styled.button``;
 
 const OrderDetails = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [orderedItems, setOrderItems] = useState([]);
-  // const [orderStatus,setOrderStatus]=useState({});
-  // const status={status: "Order Cancelled By User"}
+  const [status, setStatus] = useState("");
 
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
   const orderStatus = { status: "Canceled" };
-  console.log(order.orders);
+  console.log(order.orders.status);
   useEffect(() => {
     const getOrder = async () => {
       try {
-        const res = await userRequest.get(`/orders/find/${order._id}`);
+        const res = await userRequest.get(`/orders/find/${order.orders._id}`);
 
         console.log(res);
         dispatch(addOrder(res.data));
@@ -156,7 +165,7 @@ const OrderDetails = () => {
       }
     };
     getOrder();
-  }, [currentUser, dispatch, order._id]);
+  }, [currentUser, dispatch, order.orders._id]);
 
   console.log(order);
 
@@ -170,110 +179,103 @@ const OrderDetails = () => {
     }
   };
 
-  const cancelHandler = async () => {
-    try {
-      const res = await userRequest.put(`/orders/find/${id}`);
-
-      console.log(res);
-      // dispatch(cancelOrder());
-      setOrderItems(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const Status = ({ type }) => {
-    return (
-      <StatusButton className={"widgetLgButton " + type}>{type}</StatusButton>
-    );
+    setStatus(type);
+    return <StatusButton type={type}>{type}</StatusButton>;
   };
   return (
-    <div>
-      <h1>ola</h1>
-    </div>
-    // <Container>
-    //   {order.orders != null ? ( 
-    //     <>
-    //       {order.orders !== null ? (
-    //         <ShippingInfo>
-    //           <Title>
-    //             <H1>Shipping Details</H1>
-    //           </Title>
+    <Container>
+      {order.orders._id ? (
+        <>
+          {order.orders._id ? (
+            <ShippingInfo>
+              <Title>
+                <H1>Shipping Details</H1>
+              </Title>
 
-    //           <TextDiv>
-    //             <Div>
-    //               <h3>Name</h3>
-    //             </Div>
-    //             <Div>
-    //               <SpanText>{order.orders.name}</SpanText>
-    //             </Div>
-    //           </TextDiv>
-    //           <TextDiv>
-    //             <Div>
-    //               <h3>Address</h3>
-    //             </Div>
-    //             <Div>
-    //               <SpanText>{order.orders.number}</SpanText>
-    //             </Div>
-    //           </TextDiv>
-    //           <TextDiv>
-    //             <Div>
-    //               <h3>Number</h3>
-    //             </Div>
-    //             <Div>
-    //               <SpanText>{order.orders.address}</SpanText>
-    //             </Div>
-    //           </TextDiv>
-    //         </ShippingInfo>
-    //       ) : (
-    //         <img src={dualring} alt="img" />
-    //       )}
-    //       <OrderStatus>
-    //         <Title>
-    //           <H1>Order Status</H1>
-    //         </Title>
-    //         <Status type={order.orders.status}>{order.orders.status}</Status>
-    //         {/* <h4>{order.orders[0].status}</h4> */}
-    //       </OrderStatus>
-    //       <Product>
-    //         <Title>
-    //           <H1>Ordered Items</H1>
-    //         </Title>
-    //         {order.orders !== null ? (
-    //           <>
-    //             {order.orders.products.map((item) => {
-    //               return (
-    //                 <ItemsDiv key={item._id}>
-    //                   <OrderedComponents
-    //                     img={item.productImg}
-    //                     quantity={item.quantity}
-    //                     productName={item.productName}
-    //                     price={item.price * item.quantity}
-    //                   />
-    //                 </ItemsDiv>
-    //               );
-    //             })}
-    //           </>
-    //         ) : (
-    //           <img src={dualring} alt="img" />
-    //         )}
-    //       </Product>
-    //     </>
-    //   ) : (
-    //     <NoOrderDiv>
-    //       <Title>No Orders</Title>
-    //       <RemoveShoppingCartIcon style={{ fontSize: "100px", color: "red" }} />
-    //       <HomeButton>
-    //         <Link style={{ textDecoration: "none", color: "white" }} to="/">
-    //           Back To Home Page
-    //         </Link>
-    //       </HomeButton>
-    //     </NoOrderDiv>
-    //   )}
-    //   <Div>
-    //     <Button onClick={handleOrderStatus}>Cancel Order</Button>
-    //   </Div>
-    // </Container>
+              <TextDiv>
+                <Div>
+                  <h3>Name</h3>
+                </Div>
+                <Div>
+                  <SpanText>{order.orders.name}</SpanText>
+                </Div>
+              </TextDiv>
+              <TextDiv>
+                <Div>
+                  <h3>Address</h3>
+                </Div>
+                <Div>
+                  <SpanText>{order.orders.address}</SpanText>
+                </Div>
+              </TextDiv>
+              <TextDiv>
+                <Div>
+                  <h3>Number</h3>
+                </Div>
+                <Div>
+                  <SpanText>{order.orders.number}</SpanText>
+                </Div>
+              </TextDiv>
+            </ShippingInfo>
+          ) : (
+            <img src={dualring} alt="img" />
+          )}
+          <OrderStatus>
+            <Title>
+              <H1>Order Status</H1>
+            </Title>
+            <Status type={order.orders.status}>{order.orders.status}</Status>
+            {status === "Delivered" && (
+              <DeliveredButton
+                onClick={() => {
+                  dispatch(cancelOrder());
+                }}
+              >
+                <TaskAltIcon />
+                <Span>OK</Span>
+              </DeliveredButton>
+            )}
+          </OrderStatus>
+          <Product>
+            <Title>
+              <H1>Ordered Items</H1>
+            </Title>
+            {order.orders !== null ? (
+              <>
+                {order.orders.products.map((item) => {
+                  return (
+                    <ItemsDiv key={item._id}>
+                      <OrderedComponents
+                        img={item.productImg}
+                        quantity={item.quantity}
+                        productName={item.productName}
+                        price={item.price * item.quantity}
+                      />
+                    </ItemsDiv>
+                  );
+                })}
+              </>
+            ) : (
+              <img src={dualring} alt="img" />
+            )}
+          </Product>
+          <Div>
+            <Button onClick={handleOrderStatus}>Cancel Order</Button>
+          </Div>
+        </>
+      ) : (
+        <NoOrderDiv>
+          <Title>No Orders</Title>
+          <RemoveShoppingCartIcon style={{ fontSize: "100px", color: "red" }} />
+          <HomeButton>
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              Back To Home Page
+            </Link>
+          </HomeButton>
+        </NoOrderDiv>
+      )}
+    </Container>
   );
 };
 
