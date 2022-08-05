@@ -117,7 +117,7 @@ const Success = () => {
       }
     };
     data && createOrder();
-  }, [cart, data, currentUser, address, number]);
+  }, [cart, data, currentUser, address, number,dispatch]);
 
 console.log(orderedItems);
 

@@ -151,22 +151,26 @@ const OrderDetails = () => {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
   const orderStatus = { status: "Canceled" };
-  console.log(order.orders.status);
+  // console.log(order.orders.status);
+  // if (order){
   useEffect(() => {
-    const getOrder = async () => {
-      try {
-        const res = await userRequest.get(`/orders/find/${order.orders._id}`);
+    if (order) {
+      const getOrder = async () => {
+        try {
+          const res = await userRequest.get(`/orders/find/${order.orders._id}`);
 
-        console.log(res);
-        dispatch(addOrder(res.data));
-        setOrderItems(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getOrder();
-  }, [currentUser, dispatch, order.orders._id]);
+          console.log(res);
+          // dispatch(addOrder(res.data));
+          setOrderItems(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getOrder();
+    }
+  }, [currentUser, dispatch, order]);
 
+  // }
   console.log(order);
 
   const handleOrderStatus = async () => {
@@ -185,42 +189,39 @@ const OrderDetails = () => {
   };
   return (
     <Container>
-      {order.orders._id ? (
-        <>
-          {order.orders._id ? (
-            <ShippingInfo>
-              <Title>
-                <H1>Shipping Details</H1>
-              </Title>
+      {order.orders.length!==0 ? (
+        <Fragment>
+          <ShippingInfo>
+            <Title>
+              <H1>Shipping Details</H1>
+            </Title>
 
-              <TextDiv>
-                <Div>
-                  <h3>Name</h3>
-                </Div>
-                <Div>
-                  <SpanText>{order.orders.name}</SpanText>
-                </Div>
-              </TextDiv>
-              <TextDiv>
-                <Div>
-                  <h3>Address</h3>
-                </Div>
-                <Div>
-                  <SpanText>{order.orders.address}</SpanText>
-                </Div>
-              </TextDiv>
-              <TextDiv>
-                <Div>
-                  <h3>Number</h3>
-                </Div>
-                <Div>
-                  <SpanText>{order.orders.number}</SpanText>
-                </Div>
-              </TextDiv>
-            </ShippingInfo>
-          ) : (
-            <img src={dualring} alt="img" />
-          )}
+            <TextDiv>
+              <Div>
+                <h3>Name</h3>
+              </Div>
+              <Div>
+                <SpanText>{order.orders.name}</SpanText>
+              </Div>
+            </TextDiv>
+            <TextDiv>
+              <Div>
+                <h3>Address</h3>
+              </Div>
+              <Div>
+                <SpanText>{order.orders.address}</SpanText>
+              </Div>
+            </TextDiv>
+            <TextDiv>
+              <Div>
+                <h3>Number</h3>
+              </Div>
+              <Div>
+                <SpanText>{order.orders.number}</SpanText>
+              </Div>
+            </TextDiv>
+          </ShippingInfo>
+
           <OrderStatus>
             <Title>
               <H1>Order Status</H1>
@@ -241,29 +242,25 @@ const OrderDetails = () => {
             <Title>
               <H1>Ordered Items</H1>
             </Title>
-            {order.orders !== null ? (
-              <>
-                {order.orders.products.map((item) => {
-                  return (
-                    <ItemsDiv key={item._id}>
-                      <OrderedComponents
-                        img={item.productImg}
-                        quantity={item.quantity}
-                        productName={item.productName}
-                        price={item.price * item.quantity}
-                      />
-                    </ItemsDiv>
-                  );
-                })}
-              </>
-            ) : (
-              <img src={dualring} alt="img" />
-            )}
+            {/* <Product> */}
+
+            {order.orders.products.map((item) => {
+              return (
+                <ItemsDiv key={item._id}>
+                  <OrderedComponents
+                    img={item.productImg}
+                    quantity={item.quantity}
+                    productName={item.productName}
+                    price={item.price * item.quantity}
+                  />
+                </ItemsDiv>
+              );
+            })}
           </Product>
           <Div>
             <Button onClick={handleOrderStatus}>Cancel Order</Button>
           </Div>
-        </>
+        </Fragment>
       ) : (
         <NoOrderDiv>
           <Title>No Orders</Title>

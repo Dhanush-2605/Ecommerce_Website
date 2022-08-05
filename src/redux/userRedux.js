@@ -7,6 +7,7 @@ const userSlice = createSlice({
     initialState: {
       currentUser:null,
       isFetching: false,
+      navImage:"",
       error: false,
     },
     reducers: {
@@ -26,10 +27,14 @@ const userSlice = createSlice({
         },
         logoutUser:(state)=>{
             state.currentUser=null;
+        },
+        setNavImage:(state,action)=>{
+            state.navImage=action.payload
+
         }
 
     },
   });
 
-export const {loginStart,loginFailure,loginSuccess,logoutUser}=userSlice.actions;
+export const {loginStart,loginFailure,loginSuccess,logoutUser,setNavImage}=userSlice.actions;
 export default userSlice.reducer;

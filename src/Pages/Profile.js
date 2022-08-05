@@ -6,6 +6,9 @@ import { mobile } from "../Responsive";
 import { userRequest } from "../requestMethod";
 import app from "../firebase.js";
 import { useSelector } from "react-redux";
+import { loginSuccess } from "../redux/userRedux";
+import { setNavImage } from "../redux/userRedux";
+import { useDispatch } from "react-redux";
 
 import {
   getStorage,
@@ -121,6 +124,7 @@ const Profile = () => {
   const fileButton=useRef();
 
   const User = useSelector((state) => state.user.currentUser);
+  const dispatch=useDispatch();
 
   console.log(User);
 
@@ -135,6 +139,7 @@ const Profile = () => {
     // }catch(err){
     //   console.log(err);
     // }
+
 
     e.preventDefault();
     const fileName = new Date().getTime() + file.name;
@@ -184,15 +189,20 @@ const Profile = () => {
         if (image) {
           const res = await userRequest.put(`users/${User._id}`, image);
 
-          console.log(res);
-          setProfile(res.data.img)
+          console.log(res.data);
+          dispatch(setNavImage(res.data.img));
+          setProfile(res.data.img);
         }
       } catch (err) {
         console.log(err);
       }
     };
     updatedProfile();
-  });
+  },[image,User._id,dispatch]);
+
+
+
+
 
   const passwordHandler=async()=>{
     try{

@@ -68,6 +68,7 @@ const Right = styled.div`
 const Image = styled.img`
   height: 50px;
   width: 50px;
+  margin-left: 2px;
   border-radius: 50%;
   object-fit: cover;
 `;
@@ -88,6 +89,7 @@ const Navbar = () => {
     dispatch(logoutUser());
     navigate("/login");
   };
+  console.log(user.navImage);
 
   return (
     <Container>
@@ -103,13 +105,16 @@ const Navbar = () => {
           <Logo>Dhanush.</Logo>
         </Center>
         <Right>
-          <Link to="/register" style={{ textDecoration: "none" }}>
-            <MenuItem>Register</MenuItem>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <MenuItem>Login</MenuItem>
-          </Link>
-
+          {!user.currentUser && (
+            <>
+              <Link to="/register" style={{ textDecoration: "none" }}>
+                <MenuItem>Register</MenuItem>
+              </Link>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <MenuItem>Login</MenuItem>
+              </Link>
+            </>
+          )}
           <MenuItem onClick={handleClick}>Logout</MenuItem>
           <Link to="/cart">
             <MenuItem>
@@ -119,7 +124,7 @@ const Navbar = () => {
             </MenuItem>
           </Link>
           <Link to="/profile">
-            <Image src={user.currentUser.img} alt="user" />
+            <Image src={user.navImage || <AccountCircleIcon />} alt="user" />
           </Link>
         </Right>
       </Wrapper>

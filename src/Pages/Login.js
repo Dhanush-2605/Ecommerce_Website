@@ -8,13 +8,7 @@ import loginPage from "../Assests/loginPage.svg";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  /* background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"),
-    center;
-  background-size: cover; */
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,8 +16,7 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div`
   width: 50%;
-  /* height: 100vh; */
-  /* height:20vh; */
+ 
   ${mobile({ width: "75%" })}
   padding: 40px;
   margin: auto;
@@ -52,7 +45,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 15px 20px;
   border: none;
-  /* width: 40%; */
+
   background-color: teal;
   color: white;
   cursor: pointer;
@@ -83,7 +76,7 @@ const Right = styled.div`
   justify-content: center;
   height: 100vh;
 
-  /* background-color: red; */
+
 `;
 const ButtonDiv = styled.div`
   display: flex;
@@ -110,11 +103,11 @@ const Login = () => {
 
     login(dispatch, { username, password });
   };
-console.log(isFetching);
+
   return (
     <Container>
     <Left>
-    <img src={loginPage}></img>
+    <img src={loginPage} alt="img"></img>
 
     </Left>
     <Right>
@@ -143,7 +136,7 @@ console.log(isFetching);
 
           {error && <Error>Something Went Wrong.....</Error>}
           <Link>Do Not YOU REMEMBER THE PASSWORD</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Link to="/register">CREATE A NEW ACCOUNT</Link>
           </Div>
         </Form>
       </Wrapper>

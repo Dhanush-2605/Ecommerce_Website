@@ -90,6 +90,7 @@ const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+
   justify-content: space-around;
 `;
 
@@ -143,7 +144,8 @@ const Summary = styled.div`
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
-  height: 50vh;
+  height: 55vh;
+
 `;
 
 const SummaryTitle = styled.h1`
@@ -210,7 +212,7 @@ const Cart = () => {
   const handleClick = () => {
     dispatch(emptyCart());
   };
-  // console.log(cart.products);
+
 
   console.log(process.env.REACT_APP_RAZORPAY_KEY_ID);
 
@@ -345,6 +347,9 @@ const Cart = () => {
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
 
+
+
+
             {showCheckOut && (
               <Button onClick={checkouthandleClick}>CHECKOUT NOW</Button>
             )}
@@ -367,8 +372,8 @@ const Cart = () => {
                 </AddressButton>
               </Address>
             )}
-
-            <Button style={{ marginTop: "200px" }}>
+            
+            <Button style={{marginTop:"30px"}}>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
                 to={`/orderdetails/${currentUser._id}`}
@@ -376,6 +381,7 @@ const Cart = () => {
                 ORDER DETAILS
               </Link>
             </Button>
+
           </Summary>
         </Bottom>
       </Wrapper>
