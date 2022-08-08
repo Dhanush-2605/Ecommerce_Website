@@ -42,7 +42,7 @@ const Div = styled.div`
   margin: 20px 0px;
 `;
 const ShippingInfo = styled.div`
-  width: 70%;
+  width: 40%;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 `;
@@ -146,7 +146,7 @@ const OrderDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [orderedItems, setOrderItems] = useState([]);
-  const [status, setStatus] = useState("");
+  // const [status, setStatus] = useState("");
 
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
@@ -158,9 +158,10 @@ const OrderDetails = () => {
       const getOrder = async () => {
         try {
           const res = await userRequest.get(`/orders/find/${order.orders._id}`);
+          // dispatch(addOrder(res.data));
 
           console.log(res);
-          // dispatch(addOrder(res.data));
+
           setOrderItems(res.data);
         } catch (err) {
           console.log(err);
@@ -171,7 +172,7 @@ const OrderDetails = () => {
   }, [currentUser, dispatch, order]);
 
   // }
-  console.log(order);
+  console.log(order.orders);
 
   const handleOrderStatus = async () => {
     try {
@@ -184,12 +185,12 @@ const OrderDetails = () => {
   };
 
   const Status = ({ type }) => {
-    setStatus(type);
+    // setStatus(type);
     return <StatusButton type={type}>{type}</StatusButton>;
   };
   return (
     <Container>
-      {order.orders.length!==0 ? (
+      {order.orders.length !== 0 ? (
         <Fragment>
           <ShippingInfo>
             <Title>
@@ -226,8 +227,8 @@ const OrderDetails = () => {
             <Title>
               <H1>Order Status</H1>
             </Title>
-            <Status type={order.orders.status}>{order.orders.status}</Status>
-            {status === "Delivered" && (
+            <Status type={orderedItems.status}>{orderedItems.status}</Status>
+            {orderedItems.status === "Delivered" && (
               <DeliveredButton
                 onClick={() => {
                   dispatch(cancelOrder());

@@ -15,11 +15,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import OrderedComponents from "../Components/orderedComponents";
-// import { useHistory } from "react-router-dom";
+
 import { emptyCart } from "../redux/cartRedux";
 
 import { mobile } from "../Responsive";
-// import Order from "../../../Server/models/Order";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -145,7 +144,6 @@ const Summary = styled.div`
   border-radius: 10px;
   padding: 20px;
   height: 55vh;
-
 `;
 
 const SummaryTitle = styled.h1`
@@ -213,7 +211,6 @@ const Cart = () => {
     dispatch(emptyCart());
   };
 
-
   console.log(process.env.REACT_APP_RAZORPAY_KEY_ID);
 
   const initPayment = (data) => {
@@ -253,7 +250,13 @@ const Cart = () => {
       };
     });
   };
-  const addressHandleClick = () => {
+  const addressHandleClick = async () => {
+    try {
+      const res = await userRequest.put(`users/${currentUser._id}`,deliver);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
     setShowCheckOut((prev) => {
       return !prev;
     });
@@ -269,8 +272,6 @@ const Cart = () => {
       setOrderId(res.data.id);
 
       initPayment(res.data);
-
-      // initPayment(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -298,7 +299,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -347,9 +348,6 @@ const Cart = () => {
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
 
-
-
-
             {showCheckOut && (
               <Button onClick={checkouthandleClick}>CHECKOUT NOW</Button>
             )}
@@ -360,20 +358,22 @@ const Cart = () => {
                   name="address"
                   type="text"
                   placeholder="Address"
+                  autoComplete="off"
                 ></Input>
                 <Input
                   onChange={changeHandler}
                   name="number"
                   type="tel"
                   placeholder="Mobile Number"
+                  autoComplete="off"
                 ></Input>
                 <AddressButton onClick={addressHandleClick}>
                   DELIVER HERE
                 </AddressButton>
               </Address>
             )}
-            
-            <Button style={{marginTop:"30px"}}>
+
+            <Button style={{ marginTop: "30px" }}>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
                 to={`/orderdetails/${currentUser._id}`}
@@ -381,7 +381,6 @@ const Cart = () => {
                 ORDER DETAILS
               </Link>
             </Button>
-
           </Summary>
         </Bottom>
       </Wrapper>

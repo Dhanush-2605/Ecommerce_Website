@@ -107,40 +107,29 @@ const ButtonDiv = styled.div`
   height: 100px;
   width: 200px;
 `;
-const UploadButton=styled.button`
+const UploadButton = styled.button`
   padding: 10px;
   border: none;
   cursor: pointer;
   width: 100%;
-  background-color:dodgerblue;
+  background-color: dodgerblue;
   color: white;
-`
+`;
 const Profile = () => {
   const [userData, setUserData] = useState({});
   const [password, setNewPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [image, setImage] = useState({});
-  const [profile,setProfile]=useState("");
+  const [profile, setProfile] = useState("");
   const [file, setFile] = useState();
-  const fileButton=useRef();
+  const fileButton = useRef();
 
   const User = useSelector((state) => state.user.currentUser);
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   console.log(User);
 
   const profileHandler = (e) => {
-    // try{
-    //   if (preview){
-    //     imageProfile.img=preview;
-    // const res=await userRequest.put(`users/profile/${User._id}}`,preview);
-
-    // console.log(res);
-    //   }
-    // }catch(err){
-    //   console.log(err);
-    // }
-
-
     e.preventDefault();
     const fileName = new Date().getTime() + file.name;
     const storage = getStorage(app);
@@ -198,22 +187,17 @@ const Profile = () => {
       }
     };
     updatedProfile();
-  },[image,User._id,dispatch]);
+  }, [image, User._id, dispatch]);
 
-
-
-
-
-  const passwordHandler=async()=>{
-    try{
+  const passwordHandler = async () => {
+    try {
       // const res=await userRequest.put(`users/${User._id}`,data);
-
-
-    }catch(err){
+      alert("successfully updated !!");
+    } catch (err) {
       console.log(err);
-
     }
-  }
+  };
+
   /* useEffect(()=>{
         const getData=async()=>{
             try{
@@ -235,7 +219,11 @@ const Profile = () => {
   // const updateProfile=async()=>{
 
   // }
-
+  const showPasswordHandler = () => {
+    setShowPassword((prev) => {
+      return !prev;
+    });
+  };
   // console.log(preview);
   return (
     <Container>
@@ -247,7 +235,14 @@ const Profile = () => {
           </TopDiv>
           <TopDiv>
             <ButtonDiv>
-              <UploadButton onClick={(event)=>{event.preventDefault();fileButton.current.click()}}>choose image</UploadButton>
+              <UploadButton
+                onClick={(event) => {
+                  event.preventDefault();
+                  fileButton.current.click();
+                }}
+              >
+                choose image
+              </UploadButton>
 
               <File
                 type="file"
@@ -279,21 +274,23 @@ const Profile = () => {
           </Div>
 
           <Div>
-            <Button>Change Password</Button>
+            <Button onClick={showPasswordHandler}>Change Password</Button>
           </Div>
         </Right>
       </Wrapper>
+      {showPassword &&
       <Update>
         <Div>
-          <Input placeholder="Password"></Input>
+          <Input placeholder="Password" type="password"></Input>
         </Div>
         <Div>
-          <Input placeholder="New Password"></Input>
+          <Input placeholder="New Password" type="password"></Input>
         </Div>
         <Div>
-          <Button>Update</Button>
+          <Button onClick={passwordHandler}>Update</Button>
         </Div>
       </Update>
+      }
     </Container>
   );
 };

@@ -69,7 +69,13 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
-
+const Link = styled.a`
+  margin: 5px;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 10px;
+`;
 const Left = styled.div`
   flex: 1;
   height: 100vh;
@@ -87,6 +93,13 @@ const Right = styled.div`
     marginTop: "-200px",
   })}/* background-color: red; */
 `;
+
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+`;
 function Register() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -102,7 +115,10 @@ function Register() {
   const submitHandler = async (event) => {
     event.preventDefault();
     const res = await userRequest.post("auth/register", userData);
-    navigate("/");
+   
+      alert("successfully registered");
+  
+
     console.log(res);
   };
   return (
@@ -160,12 +176,14 @@ function Register() {
             <Input
               placeholder="password"
               name="password"
+              type="password"
               onChange={changeHandler}
               autoComplete="off"
             ></Input>
             <Input
               placeholder="confirm password"
               name="confirm password"
+              type="password"
               onChange={changeHandler}
               autoComplete="off"
             ></Input>
@@ -177,6 +195,9 @@ function Register() {
               <Button onClick={submitHandler}>CREATE ACCOUNT</Button>
             </ButtonDiv>
           </Form>
+          <Div>
+            <Link href="/login">LOGIN</Link>
+          </Div>
         </Wrapper>
       </Right>
     </Container>

@@ -88,7 +88,7 @@ const Success = () => {
 
   const data = location.state.razorData;
   const cart = location.state.products;
-  console.log(cart);
+  console.log(data);
   const address = location.state.address;
   const number = location.state.number;
   const dispatch=useDispatch();
@@ -109,7 +109,7 @@ const Success = () => {
           amount: cart.total,
           number: number,
         });
-        // console.log(res);
+     
         setOrderItems(res.data);
         dispatch(addOrder(res.data));
       } catch (err) {
@@ -163,14 +163,14 @@ console.log(orderedItems);
           </button>
         </Link>
       </Left>
-      <Right>
+      {/* <Right>
         <Top></Top>
         <Bottom>
           <Title>
             <h1>Ordered Items</h1>
           </Title>
         </Bottom>
-      </Right>
+      </Right> */}
     </Container>
   );
 };

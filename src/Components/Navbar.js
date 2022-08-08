@@ -124,7 +124,7 @@ const Navbar = () => {
             </MenuItem>
           </Link>
           <Link to="/profile">
-            <Image src={user.navImage || <AccountCircleIcon />} alt="user" />
+            <Image src={user.navImage || "https://cdn-icons-png.flaticon.com/512/1077/1077012.png"} alt="user" />
           </Link>
         </Right>
       </Wrapper>

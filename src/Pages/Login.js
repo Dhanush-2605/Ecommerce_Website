@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/apiCalls";
 import { useSelector } from "react-redux";
 import loginPage from "../Assests/loginPage.svg";
+// import { Link } from "react-router-dom";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -134,9 +135,9 @@ const Login = () => {
           </ButtonDiv>
           <Div>
 
-          {error && <Error>Something Went Wrong.....</Error>}
+          {error && <Error>{error}</Error>}
           <Link>Do Not YOU REMEMBER THE PASSWORD</Link>
-          <Link to="/register">CREATE A NEW ACCOUNT</Link>
+          <Link href="/register">CREATE A NEW ACCOUNT</Link>
           </Div>
         </Form>
       </Wrapper>
