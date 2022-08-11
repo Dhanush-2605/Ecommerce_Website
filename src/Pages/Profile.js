@@ -117,7 +117,7 @@ const UploadButton = styled.button`
 `;
 const Profile = () => {
   const [userData, setUserData] = useState({});
-  const [password, setNewPassword] = useState("");
+  const [password, setNewPassword] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [image, setImage] = useState({});
   const [profile, setProfile] = useState("");
@@ -190,9 +190,9 @@ const Profile = () => {
   }, [image, User._id, dispatch]);
 
   const passwordHandler = async () => {
+    console.log(password);
     try {
-      // const res=await userRequest.put(`users/${User._id}`,data);
-      alert("successfully updated !!");
+      const res=await userRequest.put(`users/${User._id}`,password);
     } catch (err) {
       console.log(err);
     }
@@ -219,6 +219,14 @@ const Profile = () => {
   // const updateProfile=async()=>{
 
   // }
+  const passwordChangeHandler = (event) => {
+    setNewPassword((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
   const showPasswordHandler = () => {
     setShowPassword((prev) => {
       return !prev;
@@ -278,19 +286,29 @@ const Profile = () => {
           </Div>
         </Right>
       </Wrapper>
-      {showPassword &&
-      <Update>
-        <Div>
-          <Input placeholder="Password" type="password"></Input>
-        </Div>
-        <Div>
-          <Input placeholder="New Password" type="password"></Input>
-        </Div>
-        <Div>
-          <Button onClick={passwordHandler}>Update</Button>
-        </Div>
-      </Update>
-      }
+      {showPassword && (
+        <Update>
+          <Div>
+            <Input
+              placeholder="Password"
+              type="password"
+              name="confirm password"
+              onChange={passwordChangeHandler}
+            ></Input>
+          </Div>
+          <Div>
+            <Input
+              placeholder="New Password"
+              type="password"
+              onChange={passwordChangeHandler}
+              name="password"
+            ></Input>
+          </Div>
+          <Div>
+            <Button onClick={passwordHandler}>Update</Button>
+          </Div>
+        </Update>
+      )}
     </Container>
   );
 };

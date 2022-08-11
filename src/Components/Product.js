@@ -32,10 +32,8 @@ const Container = styled.div`
   /* flex-direction: column; */
   background-color: #f5fbfd;
 
-  &:hover ${Info}{
+  &:hover ${Info} {
     opacity: 1;
-
-
   }
 `;
 const Circle = styled.div`
@@ -69,15 +67,15 @@ function Product(props) {
   return (
     <Container>
       <Circle />
-      <Image src={props.item.img} />   
+      <Image src={props.item.img} />
       <Info>
         <Icon>
           <ShoppingCartIcon />
         </Icon>
         <Icon>
-        <Link to={`/product/${props.item._id}`}>
-          <SearchIcon />
-        </Link>
+          <Link to={`/product/${props.item._id}`}>
+            <SearchIcon />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteIcon />

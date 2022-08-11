@@ -79,10 +79,12 @@ const Product = styled.div`
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 const Image = styled.img`
   width: 200px;
+  ${mobile({ width: "80vw" })}
 `;
 
 const Details = styled.div`
@@ -252,7 +254,7 @@ const Cart = () => {
   };
   const addressHandleClick = async () => {
     try {
-      const res = await userRequest.put(`users/${currentUser._id}`,deliver);
+      const res = await userRequest.put(`users/${currentUser._id}`, deliver);
       console.log(res);
     } catch (err) {
       console.log(err);

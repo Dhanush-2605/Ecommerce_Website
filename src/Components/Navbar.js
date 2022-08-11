@@ -61,7 +61,7 @@ const Right = styled.div`
 
   align-items: center;
   justify-content: space-around;
-  ${mobile({ justifyContent: "center", flex: 2 })}
+  ${mobile({ justifyContent: "spaceAround", flex: 4 })}
   flex: 1;
 `;
 
@@ -71,6 +71,7 @@ const Image = styled.img`
   margin-left: 2px;
   border-radius: 50%;
   object-fit: cover;
+  ${mobile({width:"30px",height:"30px"})}
 `;
 const MenuItem = styled.div`
   font-size: 14px;
@@ -108,14 +109,15 @@ const Navbar = () => {
           {!user.currentUser && (
             <>
               <Link to="/register" style={{ textDecoration: "none" }}>
-                <MenuItem>Register</MenuItem>
+                <MenuItem>REGISTER</MenuItem>
+  
               </Link>
               <Link to="/login" style={{ textDecoration: "none" }}>
                 <MenuItem>Login</MenuItem>
               </Link>
             </>
           )}
-          <MenuItem onClick={handleClick}>Logout</MenuItem>
+          <MenuItem onClick={handleClick}>LOGOUT</MenuItem>
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
@@ -124,7 +126,7 @@ const Navbar = () => {
             </MenuItem>
           </Link>
           <Link to="/profile">
-            <Image src={user.navImage || "https://cdn-icons-png.flaticon.com/512/1077/1077012.png"} alt="user" />
+            <Image src={user.navImage || "https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/344/external-user-user-tanah-basah-glyph-tanah-basah-4.png"} alt="user" />
           </Link>
         </Right>
       </Wrapper>

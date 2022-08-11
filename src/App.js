@@ -12,7 +12,7 @@ import Profile from "./Pages/Profile";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
+
   return (
     <Routes>
     <Route path="/test" element={<Login />} />

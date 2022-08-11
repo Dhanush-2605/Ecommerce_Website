@@ -25,22 +25,25 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/6.jpeg?raw=true',
+      // img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/6.jpeg?raw=true',
+      img:"https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
       title: 'SHIRT STYLE!',
+      cat: 'men',
+    },
+    
+    {
+      id: 2,
+      img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/5.jpeg?raw=true',
+      title: 'LIGHT JACKETS',
       cat: 'women',
     },
     {
-      id: 2,
-      img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/4.jpeg?raw=true',
-      title: 'LOUNGEWEAR LOVE',
-      cat: 'coats',
-    },
-    {
       id: 3,
-      img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/5.jpeg?raw=true',
-      title: 'LIGHT JACKETS',
-      cat: 'jeans',
-    },
+      // img: 'https://github.com/Dhanush-2605/the-lama-shop/blob/main/client/public/4.jpeg?raw=true',
+      img:"https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=664&q=80",
+      title: 'COOL KIDS',
+      cat: 'children',
+    }
   ];
 
 

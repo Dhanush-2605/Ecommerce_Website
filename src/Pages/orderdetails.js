@@ -31,6 +31,7 @@ const Product = styled.div`
 
   flex-direction: column;
   flex-wrap: wrap;
+  &:hover {box-shadow: teal 0px 0.25em 1em;}
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   /* padding: 30px; */
 `;
@@ -45,6 +46,7 @@ const ShippingInfo = styled.div`
   width: 40%;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  &:hover {box-shadow: teal 0px 0.25em 1em;}
 `;
 const Title = styled.div`
   display: flex;
@@ -66,6 +68,7 @@ const OrderStatus = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   padding: 20px;
   width: 40%;
+  &:hover {box-shadow: teal 0px 0.25em 1em;}
 `;
 const Button = styled.button`
   border: none;
@@ -121,6 +124,7 @@ const NoOrderDiv = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+ 
 `;
 const H1 = styled.h1`
   font-weight: 500;
