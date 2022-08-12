@@ -63,6 +63,14 @@ function ProductList() {
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
+          {/* <Select name="type" onChange={handleFilters}>
+            <Option disabled>Size</Option>
+            <Option>jeans</Option>
+            <Option>short</Option>
+            <Option>coat</Option>
+            <Option>trouser</Option>
+            <Option>shirt</Option>
+          </Select> */}
           <Select name="color" onChange={handleFilters}>
             <Option disabled>color</Option>
             <Option>White</Option>
@@ -80,6 +88,7 @@ function ProductList() {
             <Option>L</Option>
             <Option>XL</Option>
           </Select>
+
         </Filter>
 
         <Filter>

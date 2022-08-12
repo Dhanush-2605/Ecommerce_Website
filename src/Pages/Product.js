@@ -112,7 +112,7 @@ const Product = () => {
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
   const select = useSelector((state) => state.cart);
-  // console.log(select);
+
 
   useEffect(() => {
     const getData = async () => {
@@ -137,9 +137,9 @@ const Product = () => {
       setQuantity(quantity + 1);
     }
   };
-  // console.log(cart.pr)
+ 
   const handleClick = () => {
-    // console.log(product);
+  
     console.log(quantity);
     console.log(price);
     dispatch(

@@ -30,7 +30,6 @@ const Products = ({ cat, filters, sort }) => {
     };
     getProducts();
   }, [cat]);
-  // console.log(cat);
 
   useEffect(() => {
     cat &&

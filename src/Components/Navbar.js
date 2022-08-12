@@ -1,4 +1,3 @@
-import React, { Component, useEffect } from "react";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
@@ -6,10 +5,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { mobile } from "../Responsive";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { userRequest } from "../requestMethod";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/userRedux";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Container = styled.div`
   height: 60px;
@@ -66,12 +63,12 @@ const Right = styled.div`
 `;
 
 const Image = styled.img`
-  height: 50px;
-  width: 50px;
-  margin-left: 2px;
+  height: 40px;
+  width: 40px;
+  margin-left: 10px;
   border-radius: 50%;
   object-fit: cover;
-  ${mobile({width:"30px",height:"30px"})}
+  ${mobile({ width: "30px", height: "30px" })}
 `;
 const MenuItem = styled.div`
   font-size: 14px;
@@ -106,28 +103,37 @@ const Navbar = () => {
           <Logo>Dhanush.</Logo>
         </Center>
         <Right>
-          {!user.currentUser && (
+          {!user.currentUser ? (
             <>
               <Link to="/register" style={{ textDecoration: "none" }}>
                 <MenuItem>REGISTER</MenuItem>
-  
               </Link>
               <Link to="/login" style={{ textDecoration: "none" }}>
-                <MenuItem>Login</MenuItem>
+                <MenuItem>LOGIN</MenuItem>
+              </Link>
+            </>
+          ) : (
+            <>
+              <MenuItem onClick={handleClick}>LOGOUT</MenuItem>
+              <Link to="/cart">
+                <MenuItem>
+                  <Badge badgeContent={quantity} color="primary">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </MenuItem>
+              </Link>
+              <Link to="/profile">
+                <Image
+                  src={
+                    user.navImage ||
+                    "https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/344/external-user-user-tanah-basah-glyph-tanah-basah-4.png"
+                  }
+                  alt="user"
+               
+                />
               </Link>
             </>
           )}
-          <MenuItem onClick={handleClick}>LOGOUT</MenuItem>
-          <Link to="/cart">
-            <MenuItem>
-              <Badge badgeContent={quantity} color="primary">
-                <ShoppingCartIcon />
-              </Badge>
-            </MenuItem>
-          </Link>
-          <Link to="/profile">
-            <Image src={user.navImage || "https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/344/external-user-user-tanah-basah-glyph-tanah-basah-4.png"} alt="user" />
-          </Link>
         </Right>
       </Wrapper>
     </Container>

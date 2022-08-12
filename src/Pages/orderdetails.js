@@ -1,19 +1,17 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 import { userRequest } from "../requestMethod";
-// import { useState,useEffect } from 'react';
+
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import OrderedComponents from "../Components/orderedComponents";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addOrder, cancelOrder } from "../redux/orderRedux";
+import { cancelOrder } from "../redux/orderRedux";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { Link } from "react-router-dom";
-import ClearIcon from "@mui/icons-material/Clear";
-import dualring from "../Assests/dualring.svg";
-import { red } from "@mui/material/colors";
+
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 const Container = styled.div`
   display: flex;
@@ -31,9 +29,10 @@ const Product = styled.div`
 
   flex-direction: column;
   flex-wrap: wrap;
-  &:hover {box-shadow: teal 0px 0.25em 1em;}
+  &:hover {
+    box-shadow: teal 0px 0.25em 1em;
+  }
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-  /* padding: 30px; */
 `;
 const Div = styled.div`
   display: flex;
@@ -46,7 +45,9 @@ const ShippingInfo = styled.div`
   width: 40%;
   padding: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-  &:hover {box-shadow: teal 0px 0.25em 1em;}
+  &:hover {
+    box-shadow: teal 0px 0.25em 1em;
+  }
 `;
 const Title = styled.div`
   display: flex;
@@ -68,7 +69,10 @@ const OrderStatus = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   padding: 20px;
   width: 40%;
-  &:hover {box-shadow: teal 0px 0.25em 1em;}
+  &:hover {
+    box-shadow: teal 0px 0.25em 1em;
+  }
+  transition-delay: 2s;
 `;
 const Button = styled.button`
   border: none;
@@ -124,7 +128,6 @@ const NoOrderDiv = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100vh;
- 
 `;
 const H1 = styled.h1`
   font-weight: 500;
@@ -155,14 +158,12 @@ const OrderDetails = () => {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
   const orderStatus = { status: "Canceled" };
-  // console.log(order.orders.status);
-  // if (order){
+
   useEffect(() => {
     if (order) {
       const getOrder = async () => {
         try {
           const res = await userRequest.get(`/orders/find/${order.orders._id}`);
-          // dispatch(addOrder(res.data));
 
           console.log(res);
 
@@ -175,7 +176,6 @@ const OrderDetails = () => {
     }
   }, [currentUser, dispatch, order]);
 
-  // }
   console.log(order.orders);
 
   const handleOrderStatus = async () => {
@@ -189,7 +189,6 @@ const OrderDetails = () => {
   };
 
   const Status = ({ type }) => {
-    // setStatus(type);
     return <StatusButton type={type}>{type}</StatusButton>;
   };
   return (
@@ -247,7 +246,6 @@ const OrderDetails = () => {
             <Title>
               <H1>Ordered Items</H1>
             </Title>
-            {/* <Product> */}
 
             {order.orders.products.map((item) => {
               return (
