@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { cancelOrder } from "../redux/orderRedux";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { Link } from "react-router-dom";
+import { notifyInfo } from "../Components/alert";
 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 const Container = styled.div`
@@ -182,6 +183,7 @@ const OrderDetails = () => {
     try {
       const res = await userRequest.put(`orders/${id}`, orderStatus);
       dispatch(cancelOrder());
+      notifyInfo("Order Canceled!!");
       console.log(res);
     } catch (err) {
       console.log(err);

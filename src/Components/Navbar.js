@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/userRedux";
+;
 
 const Container = styled.div`
   height: 60px;
@@ -79,6 +80,8 @@ const MenuItem = styled.div`
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // console.log(user);
   const user = useSelector((state) => state.user);
   console.log(user);
   const quantity = useSelector((state) => state.cart.quantity);
@@ -87,7 +90,7 @@ const Navbar = () => {
     dispatch(logoutUser());
     navigate("/login");
   };
-  console.log(user.navImage);
+  // console.log(user.navImage);
 
   return (
     <Container>
@@ -129,7 +132,6 @@ const Navbar = () => {
                     "https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/344/external-user-user-tanah-basah-glyph-tanah-basah-4.png"
                   }
                   alt="user"
-               
                 />
               </Link>
             </>

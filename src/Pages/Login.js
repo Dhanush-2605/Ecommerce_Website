@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/apiCalls";
 import { useSelector } from "react-redux";
 import loginPage from "../Assests/loginPage.svg";
-// import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { notifySuccess } from "../Components/alert";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -103,8 +104,8 @@ const Login = () => {
     event.preventDefault();
 
     login(dispatch, { username, password });
+   
   };
-
   return (
     <Container>
     <Left>
@@ -143,6 +144,7 @@ const Login = () => {
       </Wrapper>
 
     </Right>
+    <ToastContainer />
 
     </Container>
   );

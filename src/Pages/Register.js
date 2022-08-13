@@ -2,10 +2,12 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../Responsive";
-import { publicRequest, userRequest } from "../requestMethod";
+import { userRequest } from "../requestMethod";
 import { useNavigate } from "react-router-dom";
-
 import shopping from "../Assests/shopping.svg";
+import { ToastContainer } from "react-toastify";
+import { notifySuccess, notifyFailure } from "../Components/alert";
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -114,13 +116,14 @@ function Register() {
   };
   const submitHandler = async (event) => {
     event.preventDefault();
-    const res = await userRequest.post("auth/register", userData);
-   
-      alert("successfully registered");
-  
-
-    console.log(res);
+    try {
+      const res = await userRequest.post("auth/register", userData);
+      res && notifySuccess("Successfully Registered");
+    } catch (err) {
+      notifyFailure(err);
+    }
   };
+
   return (
     // <Container>
     //   <Wrapper>
@@ -200,6 +203,7 @@ function Register() {
           </Div>
         </Wrapper>
       </Right>
+      <ToastContainer />
     </Container>
   );
 }

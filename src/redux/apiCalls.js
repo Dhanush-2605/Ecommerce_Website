@@ -1,7 +1,6 @@
 import { loginStart, loginSuccess, loginFailure } from "./userRedux";
-import axios from "axios";
 import { publicRequest } from "../requestMethod";
-
+import { notifySuccess,notifyFailure} from "../Components/alert";
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -10,10 +9,14 @@ export const login = async (dispatch, user) => {
       user
     );
     dispatch(loginSuccess(res.data));
-    console.log("form login");
+    notifySuccess("Sucessfully Login");
+
+   
 
     console.log(res.data);
   } catch (err) {
     dispatch(loginFailure());
+    notifyFailure(err);
+
   }
 };

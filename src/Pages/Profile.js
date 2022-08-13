@@ -1,4 +1,3 @@
-import { style } from "@mui/system";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 
@@ -6,9 +5,11 @@ import { mobile } from "../Responsive";
 import { userRequest } from "../requestMethod";
 import app from "../firebase.js";
 import { useSelector } from "react-redux";
-import { loginSuccess } from "../redux/userRedux";
 import { setNavImage } from "../redux/userRedux";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { notifySuccess,notifyFailure } from "../Components/alert";
+
 
 import {
   getStorage,
@@ -72,7 +73,6 @@ const Img = styled.img`
   width: 200px;
   border-radius: 50%;
   object-fit: cover;
-  /* margin:60px 0px; */
 `;
 
 const Button = styled.button`
@@ -94,8 +94,7 @@ const Update = styled.div`
   padding: 20px;
 `;
 const File = styled.input`
-  /* padding: 10px;
-  margin:50x; */
+
   display: none;
   background-color: teal;
 `;
@@ -116,7 +115,7 @@ const UploadButton = styled.button`
   color: white;
 `;
 const Profile = () => {
-  const [userData, setUserData] = useState({});
+ 
   const [password, setNewPassword] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [image, setImage] = useState({});
@@ -155,18 +154,19 @@ const Profile = () => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          // const product = { ...inputs, img: downloadURL, categories: cat };
-          // console.log(product);
+
           setImage(() => {
             return {
               img: downloadURL,
             };
           });
+          if (downloadURL){ 
+            notifySuccess("Successfully Uploaded")
+          }else{
+            notifyFailure("Upload Failed!!");
+          }
 
-          // const res = await userRequest.put(`users/profile/${User._id}}`,img)
 
-          // console.log(downloadURL);
-          // addProduct(product, dispatch);
         });
       }
     );
@@ -193,32 +193,14 @@ const Profile = () => {
     console.log(password);
     try {
       const res=await userRequest.put(`users/${User._id}`,password);
+      res && notifySuccess("Sucessfully Updated");
     } catch (err) {
       console.log(err);
+      notifyFailure("Updation Failed");
     }
   };
 
-  /* useEffect(()=>{
-        const getData=async()=>{
-            try{
-            const res=await userRequest.get(`users/${User._id}`);
-            console.log(res.data);
-            setUserData(res.data);
-            }catch(err){
-                console.log(err);
-
-            }
-
-
-        }
-        getData();
-
-   
-      }) */
-
-  // const updateProfile=async()=>{
-
-  // }
+ 
   const passwordChangeHandler = (event) => {
     setNewPassword((prev) => {
       return {
@@ -232,7 +214,7 @@ const Profile = () => {
       return !prev;
     });
   };
-  // console.log(preview);
+
   return (
     <Container>
       <Wrapper>
