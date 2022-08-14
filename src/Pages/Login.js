@@ -6,7 +6,7 @@ import { login } from "../redux/apiCalls";
 import { useSelector } from "react-redux";
 import loginPage from "../Assests/loginPage.svg";
 import { ToastContainer } from "react-toastify";
-import { notifySuccess } from "../Components/alert";
+import { notifySuccess,notifyFailure,notifyInfo} from "../Components/alert";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -99,11 +99,19 @@ const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const { isFetching, error } = useSelector((state) => state.user);
+
+
   const dispatch = useDispatch();
+
   const handleClick = (event) => {
     event.preventDefault();
+    if (username!=="" && password!==""){
+      login(dispatch, { username, password });
+    }
+    else{
+      notifyInfo("Enter Valid Credntails");
+    }
 
-    login(dispatch, { username, password });
    
   };
   return (

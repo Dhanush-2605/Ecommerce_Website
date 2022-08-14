@@ -140,8 +140,6 @@ const Product = () => {
  
   const handleClick = () => {
   
-    console.log(quantity);
-    console.log(price);
     dispatch(
       addProduct({ ...product, quantity: quantity, color: color, size: size })
     );

@@ -6,8 +6,9 @@ import { userRequest } from "../requestMethod";
 import app from "../firebase.js";
 import { useSelector } from "react-redux";
 import { setNavImage } from "../redux/userRedux";
-import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+
 import { notifySuccess,notifyFailure } from "../Components/alert";
 
 
@@ -179,7 +180,7 @@ const Profile = () => {
           const res = await userRequest.put(`users/${User._id}`, image);
 
           console.log(res.data);
-          dispatch(setNavImage(res.data.img));
+     
           setProfile(res.data.img);
         }
       } catch (err) {

@@ -1,6 +1,6 @@
 import { loginStart, loginSuccess, loginFailure } from "./userRedux";
 import { publicRequest } from "../requestMethod";
-import { notifySuccess,notifyFailure} from "../Components/alert";
+import { notifySuccess, notifyFailure } from "../Components/alert";
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -9,14 +9,12 @@ export const login = async (dispatch, user) => {
       user
     );
     dispatch(loginSuccess(res.data));
-    notifySuccess("Sucessfully Login");
-
+    console.log(res);
    
-
     console.log(res.data);
   } catch (err) {
+    console.log(err);
     dispatch(loginFailure());
     notifyFailure(err);
-
   }
 };

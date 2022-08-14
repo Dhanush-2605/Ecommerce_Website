@@ -10,17 +10,13 @@ import Footer from "../Components/Footer";
 
 import Navbar from "../Components/Navbar.js";
 
-import StripeCheckout from "react-stripe-checkout";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
-import OrderedComponents from "../Components/orderedComponents";
 
 import { emptyCart } from "../redux/cartRedux";
 
 import { mobile } from "../Responsive";
 
-const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
