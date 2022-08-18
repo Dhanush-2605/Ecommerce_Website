@@ -40,15 +40,13 @@ const Left = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  /* height:100vh; */
+
   align-items: center;
   justify-content: center;
 `;
 const Right = styled.div`
   display: flex;
   flex: 1;
-  /* width: 100%; */
-  /* height: 100vh; */
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -61,7 +59,6 @@ const Top = styled.div`
   justify-content: space-around;
   flex-direction: column;
   width: 70%;
-  /* background-color: red; */
 `;
 
 const Bottom = styled.div`
@@ -80,9 +77,10 @@ const Success = () => {
   const location = useLocation();
 
   const [orderedItems, setOrderItems] = useState([]);
+  console.log(orderedItems);
   const currentUser = useSelector((state) => state.user.currentUser);
-  
-  
+  const order = useSelector((state) => state.order.orders);
+
   const orderId = location.state.orderId;
   console.log(orderId);
 
@@ -91,7 +89,7 @@ const Success = () => {
   console.log(data);
   const address = location.state.address;
   const number = location.state.number;
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     const createOrder = async () => {
       try {
@@ -109,7 +107,7 @@ const Success = () => {
           amount: cart.total,
           number: number,
         });
-     
+
         setOrderItems(res.data);
         dispatch(addOrder(res.data));
       } catch (err) {
@@ -117,9 +115,9 @@ const Success = () => {
       }
     };
     data && createOrder();
-  }, [cart, data, currentUser, address, number,dispatch]);
+  }, [cart, data, currentUser, address, number, dispatch]);
 
-console.log(orderedItems);
+  console.log(order);
 
   return (
     <Container>
@@ -176,5 +174,3 @@ console.log(orderedItems);
 };
 
 export default Success;
-
-

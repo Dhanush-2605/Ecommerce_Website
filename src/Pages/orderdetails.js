@@ -12,6 +12,8 @@ import { cancelOrder } from "../redux/orderRedux";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { Link } from "react-router-dom";
 import { notifyInfo } from "../Components/alert";
+import { addOrder,setStatus } from "../redux/orderRedux";
+
 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 const Container = styled.div`
@@ -32,6 +34,7 @@ const Product = styled.div`
   flex-wrap: wrap;
   &:hover {
     box-shadow: teal 0px 0.25em 1em;
+    transition: box-shadow 0.5s ease-in;
   }
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 `;
@@ -48,6 +51,7 @@ const ShippingInfo = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   &:hover {
     box-shadow: teal 0px 0.25em 1em;
+    transition: box-shadow 0.5s ease-in;
   }
 `;
 const Title = styled.div`
@@ -72,8 +76,8 @@ const OrderStatus = styled.div`
   width: 40%;
   &:hover {
     box-shadow: teal 0px 0.25em 1em;
+    transition: box-shadow 0.5s ease-in;
   }
-  transition-delay: 2s;
 `;
 const Button = styled.button`
   border: none;
@@ -155,29 +159,34 @@ const OrderDetails = () => {
   const id = location.pathname.split("/")[2];
   const [orderedItems, setOrderItems] = useState([]);
   // const [status, setStatus] = useState("");
+  // const order=use
 
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order);
   const orderStatus = { status: "Canceled" };
+  console.log(order);
 
   useEffect(() => {
-    if (order) {
+    
       const getOrder = async () => {
         try {
-          const res = await userRequest.get(`/orders/find/${order.orders._id}`);
+          const res = await userRequest.get(`/orders/find/${id}`);
 
-          console.log(res);
+          console.log(res.data);
 
-          setOrderItems(res.data);
+
+          order.orders.length!==0 && dispatch(setStatus(res.data.status));
+
+          
         } catch (err) {
           console.log(err);
         }
       };
       getOrder();
-    }
-  }, [currentUser, dispatch, order]);
+    
+  }, [currentUser, dispatch, order, id]);
 
-  console.log(order.orders);
+console.log(order.orders);
 
   const handleOrderStatus = async () => {
     try {
@@ -195,7 +204,7 @@ const OrderDetails = () => {
   };
   return (
     <Container>
-      {order.orders.length !== 0 ? (
+      {( order.orders.length!==0) ? (
         <Fragment>
           <ShippingInfo>
             <Title>
@@ -203,7 +212,7 @@ const OrderDetails = () => {
             </Title>
 
             <TextDiv>
-              <Div>
+              <Div style={{marginLeft:"-15px"}}>
                 <h3>Name</h3>
               </Div>
               <Div>
@@ -211,7 +220,7 @@ const OrderDetails = () => {
               </Div>
             </TextDiv>
             <TextDiv>
-              <Div>
+              <Div style={{marginLeft:"-15px"}}>
                 <h3>Address</h3>
               </Div>
               <Div>
@@ -232,17 +241,8 @@ const OrderDetails = () => {
             <Title>
               <H1>Order Status</H1>
             </Title>
-            <Status type={orderedItems.status}>{orderedItems.status}</Status>
-            {orderedItems.status === "Delivered" && (
-              <DeliveredButton
-                onClick={() => {
-                  dispatch(cancelOrder());
-                }}
-              >
-                <TaskAltIcon />
-                <Span>OK</Span>
-              </DeliveredButton>
-            )}
+            <Status type={order.Status}>{order.Status}</Status>
+
           </OrderStatus>
           <Product>
             <Title>
@@ -263,7 +263,18 @@ const OrderDetails = () => {
             })}
           </Product>
           <Div>
-            <Button onClick={handleOrderStatus}>Cancel Order</Button>
+            {(order.Status === "Shipping" || order.Status==="Pending") ? (
+              <Button onClick={handleOrderStatus}>Cancel Order</Button>
+            ) : (
+              <DeliveredButton
+                onClick={() => {
+                  dispatch(cancelOrder());
+                }}
+              >
+                <TaskAltIcon />
+                <Span>OK</Span>
+              </DeliveredButton>
+            )}
           </Div>
         </Fragment>
       ) : (
@@ -276,7 +287,7 @@ const OrderDetails = () => {
             </Link>
           </HomeButton>
         </NoOrderDiv>
-      )}
+      )} 
     </Container>
   );
 };

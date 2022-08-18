@@ -9,8 +9,7 @@ import { setNavImage } from "../redux/userRedux";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 
-import { notifySuccess,notifyFailure } from "../Components/alert";
-
+import { notifySuccess, notifyFailure } from "../Components/alert";
 
 import {
   getStorage,
@@ -45,6 +44,10 @@ const Wrapper = styled.div`
   padding: 40px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   ${mobile({ flexDirection: "column" })}
+  &:hover {
+    box-shadow: teal 0px 0.25em 1em;
+    transition: box-shadow 1s ease-in-out;
+  }
 `;
 
 const Title = styled.div`
@@ -95,7 +98,6 @@ const Update = styled.div`
   padding: 20px;
 `;
 const File = styled.input`
-
   display: none;
   background-color: teal;
 `;
@@ -116,7 +118,6 @@ const UploadButton = styled.button`
   color: white;
 `;
 const Profile = () => {
- 
   const [password, setNewPassword] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [image, setImage] = useState({});
@@ -155,19 +156,16 @@ const Profile = () => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-
           setImage(() => {
             return {
               img: downloadURL,
             };
           });
-          if (downloadURL){ 
-            notifySuccess("Successfully Uploaded")
-          }else{
+          if (downloadURL) {
+            notifySuccess("Successfully Uploaded");
+          } else {
             notifyFailure("Upload Failed!!");
           }
-
-
         });
       }
     );
@@ -180,7 +178,7 @@ const Profile = () => {
           const res = await userRequest.put(`users/${User._id}`, image);
 
           console.log(res.data);
-     
+
           setProfile(res.data.img);
         }
       } catch (err) {
@@ -193,7 +191,7 @@ const Profile = () => {
   const passwordHandler = async () => {
     console.log(password);
     try {
-      const res=await userRequest.put(`users/${User._id}`,password);
+      const res = await userRequest.put(`users/${User._id}`, password);
       res && notifySuccess("Sucessfully Updated");
     } catch (err) {
       console.log(err);
@@ -201,7 +199,6 @@ const Profile = () => {
     }
   };
 
- 
   const passwordChangeHandler = (event) => {
     setNewPassword((prev) => {
       return {
@@ -292,6 +289,7 @@ const Profile = () => {
           </Div>
         </Update>
       )}
+      <ToastContainer />
     </Container>
   );
 };

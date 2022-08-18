@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { popularProducts } from "../data";
-import { publicRequest } from "../requestMethod";
+import { publicRequest, userRequest } from "../requestMethod";
 import Product from "./Product";
 import styled from "styled-components";
 import axios from "axios";
@@ -11,9 +11,11 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
-const Products = ({ cat, filters, sort }) => {
+const Products = ({ cat, filters, sort , type }) => {
   const [products, setProducts] = useState([]);
   const [filteredProduct, setFilteredProducts] = useState([]);
+  const [ProductType,setProductType]=useState([]);
+  console.log(type);
   // console.log(props);
   console.log(filters);
   useEffect(() => {
@@ -41,6 +43,29 @@ const Products = ({ cat, filters, sort }) => {
         )
       );
   }, [products, cat, filters]);
+
+  
+
+
+  // console.log(arr);
+  
+  useEffect(()=>{
+    if (products && type){
+    let arr=products.filter((item)=>
+    
+    item.categories.includes(type)
+    
+)
+      console.log(arr);
+
+    }
+
+
+
+
+  },[type,products]);
+
+  console.log(ProductType);
 
   useEffect(() => {
     if (sort === "newest") {

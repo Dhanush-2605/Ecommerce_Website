@@ -15,7 +15,7 @@ function App() {
 
   return (
     <Routes>
-    {/* <Route path="/test" element={<Login />} /> */}
+      {/* <Route path="/test" element={<Login />} /> */}
       <Route path="/" element={<Home />} />
       <Route path="/products/:category" element={<ProductList />} />
       <Route path="/product/:id" element={<Product />} />
@@ -27,8 +27,8 @@ function App() {
 
       <Route path="/success" element={<Success />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/profile" element={<Profile />} />     
-      <Route path="/orderdetails/:id" element={<OrderDetails/>} /> 
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/orderdetails/:id" element={<OrderDetails />} />
 
       {/* <ProductList /> */}
       {/* <Product /> */}

@@ -4,6 +4,7 @@ const orderSlice = createSlice({
   name: "order",
   initialState: {
     orders: [],
+    Status: "",
   },
   reducers: {
     addOrder: (state, action) => {
@@ -14,8 +15,11 @@ const orderSlice = createSlice({
     cancelOrder: (state) => {
       state.orders = [];
     },
+    setStatus: (state, action) => {
+      state.Status = action.payload;
+    },
   },
 });
-export const { addOrder, cancelOrder } = orderSlice.actions;
+export const { addOrder, cancelOrder, setStatus } = orderSlice.actions;
 
 export default orderSlice.reducer;
