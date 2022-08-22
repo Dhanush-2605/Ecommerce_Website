@@ -10,6 +10,10 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addProduct } from "../redux/cartRedux";
+import { userRequest } from "../requestMethod";
+import { addCurProduct, updateReview } from "../redux/productRedux";
+
+import Review from "../Components/Review";
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
@@ -19,6 +23,22 @@ const Wrapper = styled.div`
 const ImageContainer = styled.div`
   flex: 1;
 `;
+
+const ReviewTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const H1 = styled.h1`
+  font-weight: 500;
+  display: inline;
+  /* border-bottom: 3px solid gray; */
+
+  border-bottom: 1.5px solid currentColor;
+  display: inline-block;
+  line-height: 0.85;
+`;
+
 const Image = styled.img`
   height: 90vh;
   object-fit: fit;
@@ -102,17 +122,54 @@ const Button = styled.button`
     background-color: #f8f4f4;
   }
 `;
+const PostDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 100px;
 
+  /* background-color: red; */
+  width: 100%;
+  /* height: 30vh; */
+`;
+const Input = styled.input`
+  /* border: none; */
+  padding: 10px;
+`;
+const ReviewButton = styled.button`
+  padding: 10px 30px;
+  border: none;
+  background-color: teal;
+  border-radius: 5px;
+`;
+
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  /* justify-content: flex-start; */
+  flex-direction: column;
+`;
+const ReviewDiv = styled.div`
+  margin-top: 50px;
+  align-items: flex-start;
+  margin-left: 100px;
+`;
 const Product = () => {
   const location = useLocation();
+  const user = useSelector((state) => state.user);
+
   const id = location.pathname.split("/")[2];
+  const [post, setPost] = useState("");
+  const [reviews, setReview] = useState({});
+  const [allReviews, setAllReviews] = useState([]);
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
-  const select = useSelector((state) => state.cart);
-
+  const Product = useSelector((state) => state.product.products);
+  console.log(Product);
+  // const product=useSelector((state)=>state.product)
 
   useEffect(() => {
     const getData = async () => {
@@ -121,15 +178,40 @@ const Product = () => {
           "http://localhost:5000/api/products/find/" + id
         );
         setProduct(res.data);
+        dispatch(addCurProduct(res.data));
         console.log(res.data);
       } catch (err) {
         console.log("ERROR");
       }
     };
     getData();
-  }, [id]);
+  }, [id, dispatch]);
   const price = product.price;
 
+  useEffect(() => {
+    const addReviews = async () => {};
+    // addReviews();
+  });
+  let like = 1;
+
+  const postReview = async () => {
+    try {
+      let review = {
+        username: user.currentUser.username,
+        img: user.currentUser.img,
+        review: post,
+      };
+      setReview(review);
+      // if (reviews){
+      const res = await userRequest.put("/products/find/" + id, review);
+      dispatch(updateReview(res.data.reviews));
+      setAllReviews(res.data.reviews);
+      console.log(res);
+      // }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleQuantity = (type) => {
     if (type === "dec") {
       quantity > 0 ? setQuantity(quantity - 1) : setQuantity(0);
@@ -137,9 +219,8 @@ const Product = () => {
       setQuantity(quantity + 1);
     }
   };
- 
+
   const handleClick = () => {
-  
     dispatch(
       addProduct({ ...product, quantity: quantity, color: color, size: size })
     );
@@ -185,8 +266,24 @@ const Product = () => {
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-      <Newsletter />
-      <Footer />
+      <ReviewTitle>
+        <H1>REVIEWS</H1>
+      </ReviewTitle>
+      <Div>
+        <PostDiv>
+          <Input
+            placeholder="Review"
+            onChange={(event) => setPost(event.target.value)}
+          />
+          <ReviewButton onClick={postReview}>post</ReviewButton>
+        </PostDiv>
+        <ReviewDiv>
+          <Review />
+        </ReviewDiv>
+      </Div>
+
+      {/* <Newsletter /> */}
+      {/* <Footer /> */}
     </Container>
   );
 };

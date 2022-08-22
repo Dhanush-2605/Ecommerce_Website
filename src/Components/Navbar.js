@@ -7,8 +7,6 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/userRedux";
-;
-
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -50,7 +48,9 @@ const Center = styled.div`
 `;
 
 const Logo = styled.h1`
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-weight: 600;
+
   ${mobile({ fontSize: "24px" })}
 `;
 //Right Part
@@ -83,7 +83,7 @@ const Navbar = () => {
 
   // console.log(user);
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   const quantity = useSelector((state) => state.cart.quantity);
 
   const handleClick = () => {
@@ -103,7 +103,7 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>Dhanush.</Logo>
+          <Logo>Welcome back, {user.currentUser.username}</Logo>
         </Center>
         <Right>
           {!user.currentUser ? (

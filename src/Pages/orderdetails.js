@@ -12,8 +12,7 @@ import { cancelOrder } from "../redux/orderRedux";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { Link } from "react-router-dom";
 import { notifyInfo } from "../Components/alert";
-import { addOrder,setStatus } from "../redux/orderRedux";
-
+import { addOrder, setStatus } from "../redux/orderRedux";
 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 const Container = styled.div`
@@ -167,26 +166,21 @@ const OrderDetails = () => {
   console.log(order);
 
   useEffect(() => {
-    
-      const getOrder = async () => {
-        try {
-          const res = await userRequest.get(`/orders/find/${id}`);
+    const getOrder = async () => {
+      try {
+        const res = await userRequest.get(`/orders/find/${id}`);
 
-          console.log(res.data);
+        console.log(res.data);
 
-
-          order.orders.length!==0 && dispatch(setStatus(res.data.status));
-
-          
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      getOrder();
-    
+        order.orders.length !== 0 && dispatch(setStatus(res.data.status));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getOrder();
   }, [currentUser, dispatch, order, id]);
 
-console.log(order.orders);
+  console.log(order.orders);
 
   const handleOrderStatus = async () => {
     try {
@@ -204,7 +198,7 @@ console.log(order.orders);
   };
   return (
     <Container>
-      {( order.orders.length!==0) ? (
+      {order.orders.length !== 0 && order.orders != null ? (
         <Fragment>
           <ShippingInfo>
             <Title>
@@ -212,7 +206,7 @@ console.log(order.orders);
             </Title>
 
             <TextDiv>
-              <Div style={{marginLeft:"-15px"}}>
+              <Div style={{ marginLeft: "-15px" }}>
                 <h3>Name</h3>
               </Div>
               <Div>
@@ -220,7 +214,7 @@ console.log(order.orders);
               </Div>
             </TextDiv>
             <TextDiv>
-              <Div style={{marginLeft:"-15px"}}>
+              <Div style={{ marginLeft: "-15px" }}>
                 <h3>Address</h3>
               </Div>
               <Div>
@@ -242,7 +236,6 @@ console.log(order.orders);
               <H1>Order Status</H1>
             </Title>
             <Status type={order.Status}>{order.Status}</Status>
-
           </OrderStatus>
           <Product>
             <Title>
@@ -263,7 +256,7 @@ console.log(order.orders);
             })}
           </Product>
           <Div>
-            {(order.Status === "Shipping" || order.Status==="Pending") ? (
+            {order.Status === "Shipping" || order.Status === "Pending" ? (
               <Button onClick={handleOrderStatus}>Cancel Order</Button>
             ) : (
               <DeliveredButton
@@ -287,7 +280,7 @@ console.log(order.orders);
             </Link>
           </HomeButton>
         </NoOrderDiv>
-      )} 
+      )}
     </Container>
   );
 };
