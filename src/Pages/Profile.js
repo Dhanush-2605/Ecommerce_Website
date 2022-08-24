@@ -124,6 +124,9 @@ const Profile = () => {
   const [profile, setProfile] = useState("");
   const [file, setFile] = useState();
   const fileButton = useRef();
+  var dateobj = 
+   new Date('2022-06-24T14:16:08.493Z');
+
 
   const User = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
@@ -258,7 +261,7 @@ const Profile = () => {
           <Div>
             <h2>Joined On</h2>
             <br />
-            <p>{User.createdAt}</p>
+            <p>{(User.createdAt.split("T")[0])}</p>
           </Div>
 
           <Div>

@@ -10,13 +10,13 @@ import Footer from "../Components/Footer";
 
 import Navbar from "../Components/Navbar.js";
 
-import {  useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { emptyCart } from "../redux/cartRedux";
 
 import { mobile } from "../Responsive";
-
+import { itemAddHandler } from "../redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -198,6 +198,7 @@ const Cart = () => {
   console.log(currentUser);
 
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const [showCheckOut, setShowCheckOut] = useState(false);
   const [deliver, setDeliver] = useState({});
 
@@ -275,7 +276,9 @@ const Cart = () => {
     }
   };
   console.log(orderId);
-
+  const addHandler = (data) => {
+    dispatch(itemAddHandler(data));
+  };
   return (
     <Container>
       <Navbar />
@@ -315,9 +318,14 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <AddIcon />
+                    <AddIcon
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        addHandler(product._id);
+                      }}
+                    />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <RemoveIcon />
+                    <RemoveIcon style={{ cursor: "pointer" }} />
                   </ProductAmountContainer>
                   <ProductPrice>
                     $ {product.price * product.quantity}

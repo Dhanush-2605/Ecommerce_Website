@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useR } from "react";
 import styled from "styled-components";
 import Navbar from "../Components/Navbar";
 import Announcements from "../Components/Announcements";
@@ -28,13 +28,13 @@ const ReviewTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 const H1 = styled.h1`
   font-weight: 500;
   display: inline;
-  /* border-bottom: 3px solid gray; */
 
-  border-bottom: 1.5px solid currentColor;
+  /* border-bottom: 1.5px solid currentColor; */
   display: inline-block;
   line-height: 0.85;
 `;
@@ -125,25 +125,34 @@ const Button = styled.button`
 const PostDiv = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  margin-left: 100px;
+  justify-content: space-between;
+  height: 250px;
+  margin-left: -700px;
+  width: 50%;
+  flex-direction: column;
 
-  /* background-color: red; */
-  width: 100%;
-  /* height: 30vh; */
+  /* width: 100vw; */
 `;
-const Input = styled.input`
+const Input = styled.textarea`
   /* border: none; */
   padding: 10px;
+  resize: none;
+  border: 1px solid gray;
 `;
 const ReviewButton = styled.button`
   padding: 10px 30px;
   border: none;
-  background-color: teal;
+  cursor: pointer;
+  background-color: #0275d8;
   border-radius: 5px;
+  margin-left: 30px;
+  font-weight: 700;
+  color: white;
+  font-size: 15px;
 `;
 
 const Div = styled.div`
+  margin-top: 50px;
   display: flex;
   align-items: center;
   /* justify-content: flex-start; */
@@ -152,24 +161,54 @@ const Div = styled.div`
 const ReviewDiv = styled.div`
   margin-top: 50px;
   align-items: flex-start;
-  margin-left: 100px;
+  /* margin-left: 100px; */
+  /* display: flex; */
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  overflow: wrap;
+  /* background-color: red; */
+`;
+const AddReview = styled.button`
+  background-color: teal;
+  border: none;
+  padding: 10px 50px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+`;
+
+const Line = styled.div`
+  width: 250px;
+  margin-top: 5px;
+  border-bottom: 2.5px solid gray;
 `;
 const Product = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
+  const today = new Date();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  let date = today.getDate();
+
+  let curDay = `${date}-${month}-${year}`;
+  console.log(curDay);
 
   const id = location.pathname.split("/")[2];
   const [post, setPost] = useState("");
   const [reviews, setReview] = useState({});
   const [allReviews, setAllReviews] = useState([]);
+  const [showReview, setShowReview] = useState();
   const [product, setProduct] = useState({});
+
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
   const Product = useSelector((state) => state.product.products);
   console.log(Product);
-  // const product=useSelector((state)=>state.product)
+  // const Product=useSelector((state)=>state.product)
 
   useEffect(() => {
     const getData = async () => {
@@ -200,6 +239,7 @@ const Product = () => {
         username: user.currentUser.username,
         img: user.currentUser.img,
         review: post,
+        date: curDay,
       };
       setReview(review);
       // if (reviews){
@@ -268,18 +308,21 @@ const Product = () => {
       </Wrapper>
       <ReviewTitle>
         <H1>REVIEWS</H1>
+        <Line></Line>
+
+        {/* <AddReview>Add Review</AddReview> */}
       </ReviewTitle>
       <Div>
         <PostDiv>
           <Input
-            placeholder="Review"
+            rows="8"
+            cols="40"
+            placeholder="Review...."
             onChange={(event) => setPost(event.target.value)}
           />
           <ReviewButton onClick={postReview}>post</ReviewButton>
         </PostDiv>
-        <ReviewDiv>
-          <Review />
-        </ReviewDiv>
+        <ReviewDiv>{Product.reviews.length !== 0 && <Review />}</ReviewDiv>
       </Div>
 
       {/* <Newsletter /> */}

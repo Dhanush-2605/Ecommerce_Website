@@ -157,6 +157,10 @@ const OrderDetails = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [orderedItems, setOrderItems] = useState([]);
+  // const cart = location.state.product;
+  // console.log(cart.products);
+
+
   // const [status, setStatus] = useState("");
   // const order=use
 

@@ -86,10 +86,12 @@ const Success = () => {
 
   const data = location.state.razorData;
   const cart = location.state.products;
-  console.log(data);
+  console.log(cart);
   const address = location.state.address;
   const number = location.state.number;
   const dispatch = useDispatch();
+
+  
   useEffect(() => {
     const createOrder = async () => {
       try {
@@ -97,7 +99,7 @@ const Success = () => {
           userId: currentUser._id,
           name: currentUser.username,
           products: cart.products.map((item) => ({
-            productId: item.id,
+            productId: item._id,
             productName: item.title,
             quantity: item.quantity,
             productImg: item.img,
