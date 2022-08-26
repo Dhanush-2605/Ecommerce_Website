@@ -95,7 +95,7 @@ const Review = () => {
       <Main>
         {product.reviews.map((review, ind) => {
           return (
-            <Wrapper>
+            <Wrapper key={ind}>
               <Top>
                 <Left>
                   <Img

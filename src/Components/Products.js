@@ -15,7 +15,7 @@ const Products = ({ cat, filters, sort , type }) => {
   const [products, setProducts] = useState([]);
   const [filteredProduct, setFilteredProducts] = useState([]);
   const [ProductType,setProductType]=useState([]);
-  console.log(type);
+  console.log(sort);
   // console.log(props);
   console.log(filters);
   useEffect(() => {

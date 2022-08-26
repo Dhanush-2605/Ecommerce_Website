@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { emptyCart } from "../redux/cartRedux";
 
 import { mobile } from "../Responsive";
-import { itemAddHandler } from "../redux/cartRedux";
+import { itemAddHandler, itemRemoveHandler, dummy } from "../redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -279,6 +279,10 @@ const Cart = () => {
   const addHandler = (data) => {
     dispatch(itemAddHandler(data));
   };
+
+  const removeHandler = (data) => {
+    dispatch(itemRemoveHandler(data));
+  };
   return (
     <Container>
       <Navbar />
@@ -290,7 +294,7 @@ const Cart = () => {
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({cart.quantity})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
           <TopButton type="filled" onClick={handleClick}>
@@ -325,7 +329,12 @@ const Cart = () => {
                       }}
                     />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <RemoveIcon style={{ cursor: "pointer" }} />
+                    <RemoveIcon
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        removeHandler(product._id);
+                      }}
+                    />
                   </ProductAmountContainer>
                   <ProductPrice>
                     $ {product.price * product.quantity}
@@ -390,6 +399,7 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
+
       <Footer />
     </Container>
   );

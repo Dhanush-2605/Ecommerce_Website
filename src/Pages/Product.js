@@ -2,8 +2,7 @@ import React, { useEffect, useState, useR } from "react";
 import styled from "styled-components";
 import Navbar from "../Components/Navbar";
 import Announcements from "../Components/Announcements";
-import Newsletter from "../Components/Newsletter";
-import Footer from "../Components/Footer";
+
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../Responsive";
 import { useLocation } from "react-router-dom";
@@ -131,10 +130,9 @@ const PostDiv = styled.div`
   width: 50%;
   flex-direction: column;
 
-  /* width: 100vw; */
+ 
 `;
 const Input = styled.textarea`
-  /* border: none; */
   padding: 10px;
   resize: none;
   border: 1px solid gray;
@@ -155,19 +153,17 @@ const Div = styled.div`
   margin-top: 50px;
   display: flex;
   align-items: center;
-  /* justify-content: flex-start; */
   flex-direction: column;
 `;
 const ReviewDiv = styled.div`
   margin-top: 50px;
   align-items: flex-start;
-  /* margin-left: 100px; */
-  /* display: flex; */
+
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
   overflow: wrap;
-  /* background-color: red; */
+
 `;
 const AddReview = styled.button`
   background-color: teal;
@@ -225,13 +221,13 @@ const Product = () => {
     };
     getData();
   }, [id, dispatch]);
-  const price = product.price;
+
 
   useEffect(() => {
     const addReviews = async () => {};
     // addReviews();
   });
-  let like = 1;
+
 
   const postReview = async () => {
     try {
@@ -298,9 +294,9 @@ const Product = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
+              <Remove onClick={() => handleQuantity("dec")} style={{cursor:"pointer"}}/>
               <Amount>{quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
+              <Add onClick={() => handleQuantity("inc")} style={{cursor:"pointer"}} />
             </AmountContainer>
             <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
@@ -322,7 +318,7 @@ const Product = () => {
           />
           <ReviewButton onClick={postReview}>post</ReviewButton>
         </PostDiv>
-        <ReviewDiv>{Product.reviews.length !== 0 && <Review />}</ReviewDiv>
+        <ReviewDiv>{Product!== null && <Review />}</ReviewDiv>
       </Div>
 
       {/* <Newsletter /> */}

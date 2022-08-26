@@ -201,6 +201,7 @@ const OrderDetails = () => {
     return <StatusButton type={type}>{type}</StatusButton>;
   };
   return (
+   
     <Container>
       {order.orders.length !== 0 && order.orders != null ? (
         <Fragment>
@@ -286,6 +287,8 @@ const OrderDetails = () => {
         </NoOrderDiv>
       )}
     </Container>
+
+
   );
 };
 

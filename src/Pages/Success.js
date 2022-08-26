@@ -110,6 +110,16 @@ const Success = () => {
           number: number,
         });
 
+        const main=await userRequest.post("/stats",{
+          products: cart.products.map((item) => ({
+            productId: item._id,    
+            price: item.price,
+          })),          
+
+
+        })
+        console.log(main);
+
         setOrderItems(res.data);
         dispatch(addOrder(res.data));
       } catch (err) {
