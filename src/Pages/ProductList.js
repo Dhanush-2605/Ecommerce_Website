@@ -104,9 +104,9 @@ console.log(filters);
               setSort(event.target.value);
             }}
           >
-            <Option value="newest">Newest</Option>
-            <Option value="asc">Price (asc)</Option>
-            <Option value="desc">Price (desc)</Option>
+            {/* <Option value="n">Newest</Option> */}
+            <Option value="high">high</Option>
+            <Option value="low">low</Option>
           </Select>
         </Filter>
       </FilterContainer>

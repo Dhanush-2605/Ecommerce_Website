@@ -91,7 +91,6 @@ const Success = () => {
   const number = location.state.number;
   const dispatch = useDispatch();
 
-  
   useEffect(() => {
     const createOrder = async () => {
       try {
@@ -109,19 +108,16 @@ const Success = () => {
           amount: cart.total,
           number: number,
         });
-
-        const main=await userRequest.post("/stats",{
-          products: cart.products.map((item) => ({
-            productId: item._id,    
-            price: item.price,
-          })),          
-
-
-        })
-        console.log(main);
-
         setOrderItems(res.data);
         dispatch(addOrder(res.data));
+        const main = await userRequest.post("/stats", {
+          products: cart.products.map((item) => ({
+            productId: item._id,
+            price: item.price,
+          })),
+          amount: cart.total,
+        });
+        console.log(main);
       } catch (err) {
         console.log(err);
       }

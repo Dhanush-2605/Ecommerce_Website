@@ -14,6 +14,7 @@ const Container = styled.div`
 const Products = ({ cat, filters, sort , type }) => {
   const [products, setProducts] = useState([]);
   const [filteredProduct, setFilteredProducts] = useState([]);
+  const [test,setTest]=useState([]);
   const [ProductType,setProductType]=useState([]);
   console.log(sort);
   // console.log(props);
@@ -32,6 +33,7 @@ const Products = ({ cat, filters, sort , type }) => {
     };
     getProducts();
   }, [cat]);
+  console.log(products);
 
   useEffect(() => {
     cat &&
@@ -45,9 +47,8 @@ const Products = ({ cat, filters, sort , type }) => {
   }, [products, cat, filters]);
 
   
-
-
-  // console.log(arr);
+// let res=filteredProduct.sort((a,b)=>a.price-b.price)
+// console.log(res);
   
   useEffect(()=>{
     if (products && type){
@@ -64,24 +65,41 @@ const Products = ({ cat, filters, sort , type }) => {
 
 
   },[type,products]);
+console.log(sort);
+  console.log(filteredProduct);
+useEffect(()=>{
+  if(sort==="low"){
+    setFilteredProducts((prev)=>{
+      filteredProduct.sort((a,b)=>a.price-b.price)
+    })
+  }
+  else{
+    setFilteredProducts((prev)=>{
+      filteredProduct.sort((a,b)=>b.price-a.price)
+    })
 
-  console.log(ProductType);
+  }
 
-  useEffect(() => {
-    if (sort === "newest") {
-      setFilteredProducts((prev) => {
-        [...prev].sort((a, b) => a.createdAt - b.createdAt);
-      });
-    } else if (sort === "asc") {
-      setFilteredProducts((prev) => {
-        [...prev].sort((a, b) => a.price - b.price);
-      });
-    } else {
-      setFilteredProducts((prev) => {
-        [...prev].sort((a, b) => b.price - a.price);
-      });
-    }
-  }, [sort]);
+},[sort,filteredProduct])
+console.log(filteredProduct);
+  // useEffect(() => {
+  //   if (sort === "newest") {
+  //     setFilteredProducts((prev) => {
+        
+  //       [...prev].sort((a, b) => a.createdAt - b.createdAt);
+  //     });
+  //   } else if (sort === "asc") {
+      
+  //     setFilteredProducts((prev) => {
+  //       console.log(prev);
+  //       [...prev].sort((a, b) => a.price - b.price);
+  //     });
+  //   } else {
+  //     setFilteredProducts((prev) => {
+  //       [...prev].sort((a, b) => b.price - a.price);
+  //     });
+  //   }
+  // }, [sort]);
 
   console.log(filteredProduct);
   return (
