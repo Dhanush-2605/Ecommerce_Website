@@ -77,6 +77,7 @@ const Img = styled.img`
   width: 200px;
   border-radius: 50%;
   object-fit: cover;
+  /* background-color: teal; */
 `;
 
 const Button = styled.button`
@@ -124,8 +125,6 @@ const Profile = () => {
   const [profile, setProfile] = useState("");
   const [file, setFile] = useState();
   const fileButton = useRef();
-  var dateobj = 
-   new Date('2022-06-24T14:16:08.493Z');
 
 
   const User = useSelector((state) => state.user.currentUser);
@@ -222,7 +221,13 @@ const Profile = () => {
         <Left>
           <Title>My Profile</Title>
           <TopDiv>
-            <Img src={profile} alt="image" />
+            <Img
+              src={
+                profile ||
+                "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxNzIgMTcyIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSIiIHN0cm9rZS1kYXNob2Zmc2V0PSIwIiBmb250LWZhbWlseT0ibm9uZSIgZm9udC13ZWlnaHQ9Im5vbmUiIGZvbnQtc2l6ZT0ibm9uZSIgdGV4dC1hbmNob3I9Im5vbmUiIHN0eWxlPSJtaXgtYmxlbmQtbW9kZTogbm9ybWFsIj48cGF0aCBkPSJNMCwxNzJ2LTE3MmgxNzJ2MTcyeiIgZmlsbD0ibm9uZSI+PC9wYXRoPjxnIGZpbGw9IiMwMDgwODAiPjxwYXRoIGQ9Ik04NiwxNC4zMzMzM2MtMzkuNTgxNSwwIC03MS42NjY2NywzMi4wODUxNyAtNzEuNjY2NjcsNzEuNjY2NjdjMCwzOS41ODE1IDMyLjA4NTE3LDcxLjY2NjY3IDcxLjY2NjY3LDcxLjY2NjY3YzM5LjU4MTUsMCA3MS42NjY2NywtMzIuMDg1MTcgNzEuNjY2NjcsLTcxLjY2NjY3YzAsLTM5LjU4MTUgLTMyLjA4NTE3LC03MS42NjY2NyAtNzEuNjY2NjcsLTcxLjY2NjY3ek04NiwzNC4wNDE2N2MxMi44NjQxNywwIDIzLjI5MTY3LDEwLjQyNzUgMjMuMjkxNjcsMjMuMjkxNjdjMCwxMi44NjQxNyAtMTAuNDI3NSwyMy4yOTE2NyAtMjMuMjkxNjcsMjMuMjkxNjdjLTEyLjg2NDE3LDAgLTIzLjI5MTY3LC0xMC40Mjc1IC0yMy4yOTE2NywtMjMuMjkxNjdjMCwtMTIuODY0MTcgMTAuNDI3NSwtMjMuMjkxNjcgMjMuMjkxNjcsLTIzLjI5MTY3ek04NiwxNDMuMzMzMzNjLTE5Ljg1MTY3LDAgLTM3LjMzODMzLC0xMC4wOTA2NyAtNDcuNjI5NjcsLTI1LjQyMDE3YzguMDMzODMsLTExLjY4MTY3IDMzLjYyNiwtMTcuNTc5ODMgNDcuNjI5NjcsLTE3LjU3OTgzYzE0LjAwMzY3LDAgMzkuNTk1ODMsNS44OTgxNyA0Ny42Mjk2NywxNy41Nzk4M2MtMTAuMjkxMzMsMTUuMzI5NSAtMjcuNzc4LDI1LjQyMDE3IC00Ny42Mjk2NywyNS40MjAxN3oiPjwvcGF0aD48L2c+PC9nPjwvc3ZnPg=="
+              }
+              alt="image"
+            />
           </TopDiv>
           <TopDiv>
             <ButtonDiv>
@@ -261,7 +266,7 @@ const Profile = () => {
           <Div>
             <h2>Joined On</h2>
             <br />
-            <p>{(User.createdAt.split("T")[0])}</p>
+            <p>{User.createdAt.split("T")[0]}</p>
           </Div>
 
           <Div>

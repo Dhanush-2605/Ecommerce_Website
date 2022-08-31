@@ -199,11 +199,13 @@ const OrderDetails = () => {
 
   const Status = ({ type }) => {
     return <StatusButton type={type}>{type}</StatusButton>;
+  
   };
+  console.log(order);
   return (
    
     <Container>
-      {order.orders.length !== 0 && order.orders != null ? (
+      {order.orders.length !== null && order.orders.length!==0 ? (
         <Fragment>
           <ShippingInfo>
             <Title>

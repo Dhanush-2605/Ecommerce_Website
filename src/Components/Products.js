@@ -11,14 +11,14 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
-const Products = ({ cat, filters, sort , type }) => {
+const Products = ({ cat, filters, sort, type }) => {
   const [products, setProducts] = useState([]);
   const [filteredProduct, setFilteredProducts] = useState([]);
-  const [test,setTest]=useState([]);
-  const [ProductType,setProductType]=useState([]);
-  console.log(sort);
+  const [test, setTest] = useState([]);
+  const [ProductType, setProductType] = useState([]);
+  // console.log(sort);
   // console.log(props);
-  console.log(filters);
+  // console.log(filters);
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -29,7 +29,9 @@ const Products = ({ cat, filters, sort , type }) => {
         );
         setProducts(res.data);
         console.log(res);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
     getProducts();
   }, [cat]);
@@ -46,65 +48,40 @@ const Products = ({ cat, filters, sort , type }) => {
       );
   }, [products, cat, filters]);
 
-  
-// let res=filteredProduct.sort((a,b)=>a.price-b.price)
-// console.log(res);
-  
-  useEffect(()=>{
-    if (products && type){
-    let arr=products.filter((item)=>
-    
-    item.categories.includes(type)
-    
-)
-      console.log(arr);
+  // let res=filteredProduct.sort((a,b)=>a.price-b.price)
+  // console.log(res);
+  console.log(type);
+  useEffect(() => {
+    if (products && type) {
+      setFilteredProducts(
+        products.filter((item) => item.categories.includes(type))
+      );
 
+      // console.log(arr);
     }
+  }, [type, products]);
 
-
-
-
-  },[type,products]);
-console.log(sort);
-  console.log(filteredProduct);
-useEffect(()=>{
-  if(sort==="low"){
-    setFilteredProducts((prev)=>{
-      filteredProduct.sort((a,b)=>a.price-b.price)
-    })
-  }
-  else{
-    setFilteredProducts((prev)=>{
-      filteredProduct.sort((a,b)=>b.price-a.price)
-    })
-
-  }
-
-},[sort,filteredProduct])
-console.log(filteredProduct);
-  // useEffect(() => {
-  //   if (sort === "newest") {
-  //     setFilteredProducts((prev) => {
-        
-  //       [...prev].sort((a, b) => a.createdAt - b.createdAt);
-  //     });
-  //   } else if (sort === "asc") {
-      
-  //     setFilteredProducts((prev) => {
-  //       console.log(prev);
-  //       [...prev].sort((a, b) => a.price - b.price);
-  //     });
-  //   } else {
-  //     setFilteredProducts((prev) => {
-  //       [...prev].sort((a, b) => b.price - a.price);
-  //     });
-  //   }
-  // }, [sort]);
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts(
+        (prev) => [...prev].sort((a, b) => a.createdAt - b.createdAt)
+        // [...prev].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sort]);
 
   console.log(filteredProduct);
   return (
     <Container>
-      {filteredProduct
+      {filteredProduct && filteredProduct.length > 0
         ? filteredProduct.map((item) => <Product item={item} key={item._id} />)
         : products
             .slice(0, 8)

@@ -41,7 +41,7 @@ function ProductList() {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
-  const [type,settype]=useState("");
+  const [type, settype] = useState("");
   const [sort, setSort] = useState("newest");
 
   const handleFilters = (event) => {
@@ -54,12 +54,11 @@ function ProductList() {
     console.log(filters);
   };
 
-  const handleType=(event)=>{
+  const handleType = (event) => {
     settype(event.target.value);
+  };
 
-  }
-
-console.log(filters);
+  console.log(filters);
 
   return (
     <Container>
@@ -94,7 +93,6 @@ console.log(filters);
             <Option>L</Option>
             <Option>XL</Option>
           </Select>
-
         </Filter>
 
         <Filter>
@@ -104,9 +102,9 @@ console.log(filters);
               setSort(event.target.value);
             }}
           >
-            {/* <Option value="n">Newest</Option> */}
-            <Option value="high">high</Option>
-            <Option value="low">low</Option>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="dsc">Price (dsc)</Option>
           </Select>
         </Filter>
       </FilterContainer>
